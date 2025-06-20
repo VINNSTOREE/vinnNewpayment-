@@ -31,8 +31,8 @@
       background: rgba(0, 0, 0, 0.3);
       padding: 30px 20px;
       border-radius: 20px;
-      box-shadow: 0 0 25px #0ff;
-      border: 1px solid #0ff;
+      box-shadow: 0 0 25px #ff0055;
+      border: 1px solid #ff0055;
       backdrop-filter: blur(10px);
     }
 
@@ -41,20 +41,21 @@
       height: 100px;
       margin-bottom: 10px;
       border-radius: 50%;
-      border: 2px solid #0ff;
-      box-shadow: 0 0 15px #0ff;
+      border: 2px solid #ff0055;
+      box-shadow: 0 0 15px #ff0055;
       object-fit: cover;
     }
 
     h1 {
       font-size: 2rem;
       margin: 10px 0 20px;
-      color: #0ff;
+      color: #ff0055;
+      text-shadow: 0 0 10px #ff0055;
     }
 
     .developer-name {
       font-size: 1rem;
-      color: #aaa;
+      color: #ff99aa;
       margin-bottom: 20px;
     }
 
@@ -67,19 +68,19 @@
 
     .payment-list a {
       text-decoration: none;
-      background: linear-gradient(90deg, #00fff7, #00bfff);
-      color: #000;
+      background: linear-gradient(90deg, #ff0055, #ff3366);
+      color: #fff;
       padding: 14px;
       border-radius: 12px;
       font-weight: bold;
-      box-shadow: 0 0 10px #00f2ff;
+      box-shadow: 0 0 10px #ff0055;
       transition: 0.3s;
     }
 
     .payment-list a:hover {
-      background: #0ff;
+      background: #ff0055;
       transform: translateY(-2px);
-      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+      box-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055;
     }
   </style>
 </head>
@@ -92,7 +93,6 @@
     <p>Pilih metode pembayaran di bawah ini:</p>
 
     <div class="payment-list">
-      
       <a href="/DANA">💸 Pembayaran Dana</a>
       <a href="/GOPAY">📲 Pembayaran GoPay</a>
       <a href="/QRIS">💳 QRIS Tetap</a>
