@@ -39,14 +39,43 @@
       font-size: 1rem;
       color: #fff;
     }
+    .copy-btn {
+      margin-top: 10px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      background: #0ff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+      transition: 0.3s;
+    }
+    .copy-btn:hover {
+      background: #00ccff;
+      box-shadow: 0 0 15px #0ff;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Scan GoPay untuk Membayar</h2>
     <img src="../-media-/gopay.png" alt="Gopay QR" />
-    <p class="nomor">Nomor GoPay: 081224583364</p>
+    <p class="nomor" id="nomorGopay">Nomor GoPay: 081224583364</p>
+    <button class="copy-btn" onclick="copyNomor()">📋 Salin Nomor</button>
     <p class="status">Menunggu pembayaran...</p>
   </div>
+
+  <script>
+    function copyNomor() {
+      const nomor = "081224583364";
+      navigator.clipboard.writeText(nomor).then(function() {
+        alert("Nomor GoPay berhasil disalin!");
+      }, function(err) {
+        alert("Gagal menyalin nomor.");
+      });
+    }
+  </script>
 </body>
 </html>
