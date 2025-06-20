@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pembayaran Dana</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       background: radial-gradient(circle, #0f0c29, #302b63, #24243e);
@@ -13,6 +12,7 @@
       text-align: center;
       padding: 2rem;
     }
+
     .container {
       max-width: 400px;
       margin: auto;
@@ -23,21 +23,54 @@
       background-color: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(8px);
     }
+
     img {
       width: 250px;
       border: 2px solid #0ff;
       border-radius: 10px;
       box-shadow: 0 0 10px #0ff;
     }
+
     .status {
       margin-top: 1.5rem;
       font-size: 1.2rem;
       color: #0ff;
     }
+
     .nomor {
       margin-top: 1rem;
       font-size: 1rem;
       color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .copy-btn {
+      background-color: transparent;
+      border: 1px solid #0ff;
+      color: #0ff;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .copy-btn:hover {
+      background-color: #0ff;
+      color: #000;
+      box-shadow: 0 0 20px #0ff;
+    }
+
+    .copy-notif {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #0f0;
+      display: none;
     }
   </style>
 </head>
@@ -45,8 +78,27 @@
   <div class="container">
     <h2>Scan Dana untuk Membayar</h2>
     <img src="../-media-/dana.png" alt="Dana QR" />
-    <p class="nomor">Nomor Dana: 081224583364</p>
+    
+    <div class="nomor">
+      Nomor Dana: <span id="nomorDana">081224583364</span>
+      <button class="copy-btn" onclick="salinNomor()">Copy</button>
+    </div>
+    
+    <p id="copyNotif" class="copy-notif">Nomor berhasil disalin!</p>
     <p class="status">Menunggu pembayaran...</p>
   </div>
+
+  <script>
+    function salinNomor() {
+      const nomor = document.getElementById("nomorDana").innerText;
+      navigator.clipboard.writeText(nomor).then(() => {
+        const notif = document.getElementById("copyNotif");
+        notif.style.display = "block";
+        setTimeout(() => {
+          notif.style.display = "none";
+        }, 2000);
+      });
+    }
+  </script>
 </body>
 </html>
