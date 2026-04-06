@@ -3,61 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VINN PAYMENT QRIS</title>
+<title>VINN PAYMENT</title>
 
 <style>
-body{
-  font-family: monospace;
-  background: linear-gradient(135deg,#000,#1a1a1a,#333);
-  color:#fff;
-  text-align:center;
+body {
+  font-family: 'Courier New', monospace;
+  background: radial-gradient(circle at top, #2b1907, #4b2e0e, #1a0e02);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff8dc;
+  margin: 0;
 }
 
-.container{
-  margin-top:50px;
+.container {
+  width: 90%;
+  max-width: 500px;
+  background: rgba(0,0,0,0.4);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid gold;
+  box-shadow: 0 0 30px gold;
+  text-align: center;
 }
 
-input{
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  text-align:center;
-  width:200px;
+h1 {
+  color: gold;
+  text-shadow: 0 0 10px gold;
 }
 
-button{
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:gold;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
+.btn {
+  display: block;
+  margin: 10px 0;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg,#ffce00,#ffb700);
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-button:hover{
-  background:#ffd700;
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px gold;
 }
 
-.loader{
-  display:none;
-  margin-top:20px;
-  animation: fade 1s infinite alternate;
+/* MODAL QRIS */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes fade{
-  from{opacity:0.3}
-  to{opacity:1}
+.modal-content {
+  background: #111;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid gold;
+  box-shadow: 0 0 25px gold;
+  text-align: center;
 }
 
-#qrisBox{
-  display:none;
-  margin-top:20px;
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
 }
 
-img{
-  border-radius:15px;
-  box-shadow:0 0 20px gold;
+.loader {
+  display: none;
+  margin-top: 10px;
+}
+
+img {
+  margin-top: 10px;
+  border-radius: 10px;
 }
 </style>
 </head>
@@ -65,107 +91,105 @@ img{
 <body>
 
 <div class="container">
+  <h1>VINN PAYMENT</h1>
+  <p>PAYMENT BY VINN STORE</p>
 
-<h2>💳 VINN QRIS PAYMENT</h2>
-
-<!-- INPUT -->
-<input type="number" id="nominal" placeholder="Masukkan Nominal"><br>
-<button onclick="buatQR()">🔥 Bayar Sekarang</button>
-
-<!-- LOADING -->
-<div class="loader" id="loading">
-  ⏳ Membuat QRIS...
+  <div class="btn" onclick="openQRIS()">💳 QRIS OTOMATIS</div>
+  <a class="btn" href="/DANA">💸 Dana</a>
+  <a class="btn" href="/GOPAY">📲 GoPay</a>
 </div>
 
-<!-- QR -->
-<div id="qrisBox">
-  <img id="qrisImg" width="250"><br><br>
-  <p id="textInfo"></p>
+<!-- MODAL -->
+<div class="modal" id="modalQR">
+  <div class="modal-content">
 
-  <button onclick="cekManual()">🔄 Cek Manual</button>
-</div>
+    <h3>QRIS PAYMENT</h3>
 
+    <input type="number" id="nominal" placeholder="Masukkan Nominal"><br><br>
+    <button onclick="buatQR()">Bayar</button>
+
+    <div class="loader" id="loading">⏳ Membuat QR...</div>
+
+    <div id="qrisBox" style="display:none;">
+      <img id="qrisImg" width="200"><br>
+      <p id="textInfo"></p>
+
+      <button onclick="cekManual()">🔄 Cek</button>
+    </div>
+
+    <br>
+    <button onclick="closeQRIS()">Tutup</button>
+
+  </div>
 </div>
 
 <script>
 
 let transaksiId = null
 
-// ================= CREATE =================
-async function buatQR(){
-  let nominal = document.getElementById("nominal").value
-  if(!nominal) return alert("Isi nominal dulu")
-
-  document.getElementById("loading").style.display="block"
-
-  try{
-    let res = await fetch("/api/create", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ amount: Number(nominal) })
-    })
-
-    let data = await res.json()
-
-    if(!data.success){
-      alert(data.error || "Gagal")
-      return
-    }
-
-    transaksiId = data.id
-
-    document.getElementById("loading").style.display="none"
-    document.getElementById("qrisBox").style.display="block"
-
-    document.getElementById("qrisImg").src = data.qr
-    document.getElementById("textInfo").innerText =
-      "Invoice: " + data.id +
-      "\nTotal: Rp" + data.amount.toLocaleString("id-ID")
-
-    autoCek()
-
-  }catch(e){
-    alert("Server error")
-    console.log(e)
-  }
+function openQRIS(){
+  document.getElementById("modalQR").style.display = "flex"
 }
 
-// ================= CEK MANUAL =================
-async function cekManual(){
-  if(!transaksiId) return
+function closeQRIS(){
+  document.getElementById("modalQR").style.display = "none"
+}
 
+// CREATE QR
+async function buatQR(){
+  let nominal = document.getElementById("nominal").value
+  if(!nominal) return alert("Isi nominal")
+
+  document.getElementById("loading").style.display = "block"
+
+  let res = await fetch("/api/create", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ amount: Number(nominal) })
+  })
+
+  let data = await res.json()
+
+  if(!data.success){
+    alert("Gagal")
+    return
+  }
+
+  transaksiId = data.id
+
+  document.getElementById("loading").style.display = "none"
+  document.getElementById("qrisBox").style.display = "block"
+
+  document.getElementById("qrisImg").src = data.qr
+  document.getElementById("textInfo").innerText =
+    "Invoice: " + data.id + "\nRp" + data.amount.toLocaleString("id-ID")
+
+  autoCek()
+}
+
+// CEK MANUAL
+async function cekManual(){
   let res = await fetch(`/api/status?id=${transaksiId}`)
   let data = await res.json()
 
-  if(data.status === "success"){
-    alert("✅ Pembayaran berhasil")
-  }else if(data.status === "expired"){
-    alert("❌ Transaksi expired")
-  }else{
-    alert("⏳ Belum dibayar")
-  }
+  alert("Status: " + data.status)
 }
 
-// ================= AUTO CEK =================
+// AUTO CEK
 function autoCek(){
   let interval = setInterval(async () => {
-
-    if(!transaksiId) return clearInterval(interval)
 
     let res = await fetch(`/api/status?id=${transaksiId}`)
     let data = await res.json()
 
     if(data.status === "success"){
       clearInterval(interval)
-
-      alert("💳 Pembayaran terdeteksi!\n🚀 Processing...")
-
-      // lanjut ke sistem lu (topup / notif dll)
+      alert("✅ Pembayaran berhasil")
     }
 
     if(data.status === "expired"){
       clearInterval(interval)
-      alert("❌ QRIS expired")
+      alert("❌ Expired")
     }
 
   }, 5000)
