@@ -1,0 +1,13 @@
+{
+  "name": "vinn-qris-backend",
+  "version": "1.0.0",
+  "description": "Backend QRIS Aman by Vinn Store",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api/create.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
