@@ -7,135 +7,144 @@
 
 <style>
 body {
-  font-family: 'Courier New', monospace;
+  font-family: monospace;
   background: radial-gradient(circle at top, #2b1907, #4b2e0e, #1a0e02);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  color: #fff8dc;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+  color:#fff8dc;
 }
 
 .container {
-  width: 90%;
-  max-width: 400px;
-  background: rgba(0,0,0,0.4);
-  padding: 25px;
-  border-radius: 20px;
-  border: 1px solid gold;
-  box-shadow: 0 0 25px gold;
-  text-align: center;
-  animation: fadeIn 1s ease;
+  width:90%;
+  max-width:400px;
+  background:rgba(0,0,0,0.4);
+  padding:25px;
+  border-radius:20px;
+  border:1px solid gold;
+  box-shadow:0 0 30px gold;
+  text-align:center;
 }
 
 .logo {
-  width: 90px;
-  border-radius: 50%;
-  border: 2px solid gold;
-  box-shadow: 0 0 15px gold;
-  animation: glow 2s infinite alternate;
+  width:90px;
+  border-radius:50%;
+  border:2px solid gold;
+  box-shadow:0 0 20px gold;
 }
 
 h1 {
-  color: gold;
-  text-shadow: 0 0 10px gold;
+  color:gold;
 }
 
 .btn {
-  display: block;
-  margin: 10px 0;
-  padding: 14px;
-  border-radius: 12px;
-  background: linear-gradient(90deg,#ffce00,#ffb700);
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .3s;
+  display:block;
+  margin:10px 0;
+  padding:14px;
+  border-radius:12px;
+  background:linear-gradient(90deg,#ffd700,#ffaa00);
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 .btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px gold;
+  transform:scale(1.05);
+  box-shadow:0 0 20px gold;
 }
 
 /* MODAL */
 .modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  justify-content: center;
-  align-items: center;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
 }
 
 .modal-content {
-  background: #111;
-  padding: 25px;
-  border-radius: 20px;
-  border: 1px solid gold;
-  box-shadow: 0 0 30px gold;
-  text-align: center;
-  animation: popUp 0.5s ease;
+  background:#111;
+  padding:20px;
+  border-radius:20px;
+  border:1px solid gold;
+  box-shadow:0 0 30px gold;
+  text-align:center;
+  animation:pop 0.4s;
 }
 
-/* ANIMASI */
-@keyframes fadeIn {
-  from {opacity:0; transform:translateY(20px)}
-  to {opacity:1}
+@keyframes pop {
+  from {transform:scale(0.7);opacity:0}
+  to {transform:scale(1);opacity:1}
 }
 
-@keyframes glow {
-  from {box-shadow:0 0 10px gold}
-  to {box-shadow:0 0 25px gold}
+/* QUICK */
+.quick {
+  display:flex;
+  gap:5px;
+  justify-content:center;
+  margin-bottom:10px;
 }
 
-@keyframes popUp {
-  from {transform:scale(0.7); opacity:0}
-  to {transform:scale(1); opacity:1}
+.quick button {
+  background:gold;
+  border:none;
+  padding:6px 10px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 10px gold;
 }
 
-@keyframes qrisShow {
-  from {transform:scale(0.5); opacity:0}
-  to {transform:scale(1); opacity:1}
+.quick button:hover {
+  transform:scale(1.1);
 }
 
-/* QR BOX */
+/* INPUT */
+input {
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  text-align:center;
+}
+
+/* QR */
 #qrisBox {
-  display: none;
-  margin-top: 15px;
-  animation: qrisShow 0.5s ease;
+  display:none;
+  margin-top:10px;
+  animation:fade 0.5s;
 }
 
 img {
-  border-radius: 15px;
-  box-shadow: 0 0 20px gold;
+  border-radius:10px;
+  box-shadow:0 0 20px gold;
 }
 
-input {
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  text-align: center;
+/* LOADING */
+.loader {
+  display:none;
+  margin-top:10px;
+  animation:fade 1s infinite alternate;
+}
+
+@keyframes fade {
+  from{opacity:0.3}
+  to{opacity:1}
 }
 
 /* NOTIF */
 .notif {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #111;
-  border: 1px solid gold;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px gold;
-  display: none;
-  animation: fadeIn 0.5s ease;
-}
-
-.loader {
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#111;
+  border:1px solid gold;
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 0 20px gold;
   display:none;
-  margin-top:10px;
 }
 </style>
 </head>
@@ -145,7 +154,6 @@ input {
 <div class="container">
   <img src="-media-/logo.png" class="logo">
   <h1>VINN PAYMENT</h1>
-  <p>PAYMENT BY VINN STORE</p>
 
   <div class="btn" onclick="openQRIS()">💳 QRIS OTOMATIS</div>
   <a class="btn" href="/DANA">💸 Dana</a>
@@ -154,28 +162,36 @@ input {
 
 <!-- MODAL -->
 <div class="modal" id="modalQR">
-  <div class="modal-content">
+<div class="modal-content">
 
-    <h3>💳 QRIS PAYMENT</h3>
+<h3>💳 QRIS PAYMENT</h3>
 
-    <input type="number" id="nominal" placeholder="Masukkan Nominal"><br><br>
-    <button onclick="buatQR()">Bayar Sekarang</button>
-
-    <div class="loader" id="loading">⏳ Membuat QRIS...</div>
-
-    <div id="qrisBox">
-      <img id="qrisImg" width="200"><br>
-      <p id="textInfo"></p>
-      <button onclick="cekManual()">🔄 Cek</button>
-    </div>
-
-    <br>
-    <button onclick="closeQRIS()">Tutup</button>
-
-  </div>
+<div class="quick">
+  <button onclick="setNominal(1000)">1K</button>
+  <button onclick="setNominal(5000)">5K</button>
+  <button onclick="setNominal(10000)">10K</button>
+  <button onclick="setNominal(50000)">50K</button>
+  <button onclick="setNominal(100000)">100K</button>
 </div>
 
-<!-- NOTIF -->
+<input type="number" id="nominal" placeholder="Masukkan Nominal"><br><br>
+
+<button onclick="buatQR()">🔥 Bayar Sekarang</button>
+
+<div class="loader" id="loading">⏳ Membuat QRIS...</div>
+
+<div id="qrisBox">
+  <img id="qrisImg" width="200"><br>
+  <p id="textInfo"></p>
+  <button onclick="cekManual()">🔄 Cek Status</button>
+</div>
+
+<br>
+<button onclick="closeQRIS()">Tutup</button>
+
+</div>
+</div>
+
 <div class="notif" id="notif"></div>
 
 <script>
@@ -191,10 +207,14 @@ function closeQRIS(){
 }
 
 function showNotif(text){
-  const notif = document.getElementById("notif")
-  notif.innerText = text
-  notif.style.display="block"
-  setTimeout(()=> notif.style.display="none",3000)
+  let n = document.getElementById("notif")
+  n.innerText = text
+  n.style.display="block"
+  setTimeout(()=> n.style.display="none",3000)
+}
+
+function setNominal(val){
+  document.getElementById("nominal").value = val
 }
 
 // CREATE
@@ -213,7 +233,7 @@ async function buatQR(){
   let data = await res.json()
 
   if(!data.success){
-    showNotif("❌ Gagal buat QR")
+    showNotif(data.error || "❌ Gagal buat QR")
     return
   }
 
@@ -224,20 +244,32 @@ async function buatQR(){
 
   document.getElementById("qrisImg").src = data.qr
   document.getElementById("textInfo").innerText =
-    "Invoice: "+data.id+"\nRp"+data.amount.toLocaleString("id-ID")
+    "Invoice: "+data.id+"\nRp"+Number(data.amount).toLocaleString("id-ID")
 
   autoCek()
 }
 
-// MANUAL
+// CEK MANUAL (FIX)
 async function cekManual(){
+  if(!transaksiId) return showNotif("❌ Belum ada transaksi")
+
   let res = await fetch(`/api/status?id=${transaksiId}`)
   let data = await res.json()
 
-  showNotif("Status: "+data.status)
+  if(!data || !data.status){
+    return showNotif("⚠️ Status tidak ditemukan")
+  }
+
+  if(data.status === "success"){
+    showNotif("✅ Pembayaran sukses!")
+  }else if(data.status === "expired"){
+    showNotif("❌ QRIS expired")
+  }else{
+    showNotif("⏳ Menunggu pembayaran")
+  }
 }
 
-// AUTO
+// AUTO CEK
 function autoCek(){
   let interval = setInterval(async ()=>{
 
@@ -246,7 +278,7 @@ function autoCek(){
 
     if(data.status === "success"){
       clearInterval(interval)
-      showNotif("✅ Pembayaran sukses!")
+      showNotif("✅ Pembayaran berhasil!")
     }
 
     if(data.status === "expired"){
