@@ -11,21 +11,30 @@ body {
   background: radial-gradient(circle at top, #2b1907, #4b2e0e, #1a0e02);
   height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: #fff8dc;
+  align-items: center;
   margin: 0;
+  color: #fff8dc;
 }
 
 .container {
   width: 90%;
-  max-width: 500px;
+  max-width: 400px;
   background: rgba(0,0,0,0.4);
-  padding: 30px;
+  padding: 25px;
   border-radius: 20px;
   border: 1px solid gold;
-  box-shadow: 0 0 30px gold;
+  box-shadow: 0 0 25px gold;
   text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+.logo {
+  width: 90px;
+  border-radius: 50%;
+  border: 2px solid gold;
+  box-shadow: 0 0 15px gold;
+  animation: glow 2s infinite alternate;
 }
 
 h1 {
@@ -41,8 +50,8 @@ h1 {
   background: linear-gradient(90deg,#ffce00,#ffb700);
   color: black;
   font-weight: bold;
-  text-decoration: none;
   cursor: pointer;
+  transition: .3s;
 }
 
 .btn:hover {
@@ -50,23 +59,57 @@ h1 {
   box-shadow: 0 0 20px gold;
 }
 
-/* MODAL QRIS */
+/* MODAL */
 .modal {
-  display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
+  display: none;
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
   background: #111;
-  padding: 20px;
+  padding: 25px;
   border-radius: 20px;
   border: 1px solid gold;
-  box-shadow: 0 0 25px gold;
+  box-shadow: 0 0 30px gold;
   text-align: center;
+  animation: popUp 0.5s ease;
+}
+
+/* ANIMASI */
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(20px)}
+  to {opacity:1}
+}
+
+@keyframes glow {
+  from {box-shadow:0 0 10px gold}
+  to {box-shadow:0 0 25px gold}
+}
+
+@keyframes popUp {
+  from {transform:scale(0.7); opacity:0}
+  to {transform:scale(1); opacity:1}
+}
+
+@keyframes qrisShow {
+  from {transform:scale(0.5); opacity:0}
+  to {transform:scale(1); opacity:1}
+}
+
+/* QR BOX */
+#qrisBox {
+  display: none;
+  margin-top: 15px;
+  animation: qrisShow 0.5s ease;
+}
+
+img {
+  border-radius: 15px;
+  box-shadow: 0 0 20px gold;
 }
 
 input {
@@ -76,14 +119,23 @@ input {
   text-align: center;
 }
 
-.loader {
+/* NOTIF */
+.notif {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #111;
+  border: 1px solid gold;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px gold;
   display: none;
-  margin-top: 10px;
+  animation: fadeIn 0.5s ease;
 }
 
-img {
-  margin-top: 10px;
-  border-radius: 10px;
+.loader {
+  display:none;
+  margin-top:10px;
 }
 </style>
 </head>
@@ -91,6 +143,7 @@ img {
 <body>
 
 <div class="container">
+  <img src="-media-/logo.png" class="logo">
   <h1>VINN PAYMENT</h1>
   <p>PAYMENT BY VINN STORE</p>
 
@@ -103,17 +156,16 @@ img {
 <div class="modal" id="modalQR">
   <div class="modal-content">
 
-    <h3>QRIS PAYMENT</h3>
+    <h3>💳 QRIS PAYMENT</h3>
 
     <input type="number" id="nominal" placeholder="Masukkan Nominal"><br><br>
-    <button onclick="buatQR()">Bayar</button>
+    <button onclick="buatQR()">Bayar Sekarang</button>
 
-    <div class="loader" id="loading">⏳ Membuat QR...</div>
+    <div class="loader" id="loading">⏳ Membuat QRIS...</div>
 
-    <div id="qrisBox" style="display:none;">
+    <div id="qrisBox">
       <img id="qrisImg" width="200"><br>
       <p id="textInfo"></p>
-
       <button onclick="cekManual()">🔄 Cek</button>
     </div>
 
@@ -123,76 +175,86 @@ img {
   </div>
 </div>
 
+<!-- NOTIF -->
+<div class="notif" id="notif"></div>
+
 <script>
 
 let transaksiId = null
 
 function openQRIS(){
-  document.getElementById("modalQR").style.display = "flex"
+  document.getElementById("modalQR").style.display="flex"
 }
 
 function closeQRIS(){
-  document.getElementById("modalQR").style.display = "none"
+  document.getElementById("modalQR").style.display="none"
 }
 
-// CREATE QR
+function showNotif(text){
+  const notif = document.getElementById("notif")
+  notif.innerText = text
+  notif.style.display="block"
+  setTimeout(()=> notif.style.display="none",3000)
+}
+
+// CREATE
 async function buatQR(){
   let nominal = document.getElementById("nominal").value
-  if(!nominal) return alert("Isi nominal")
+  if(!nominal) return showNotif("⚠️ Isi nominal dulu")
 
-  document.getElementById("loading").style.display = "block"
+  document.getElementById("loading").style.display="block"
 
-  let res = await fetch("/api/create", {
+  let res = await fetch("/api/create",{
     method:"POST",
     headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ amount: Number(nominal) })
+    body: JSON.stringify({ amount:Number(nominal) })
   })
 
   let data = await res.json()
 
   if(!data.success){
-    alert("Gagal")
+    showNotif("❌ Gagal buat QR")
     return
   }
 
   transaksiId = data.id
 
-  document.getElementById("loading").style.display = "none"
-  document.getElementById("qrisBox").style.display = "block"
+  document.getElementById("loading").style.display="none"
+  document.getElementById("qrisBox").style.display="block"
 
   document.getElementById("qrisImg").src = data.qr
   document.getElementById("textInfo").innerText =
-    "Invoice: " + data.id + "\nRp" + data.amount.toLocaleString("id-ID")
+    "Invoice: "+data.id+"\nRp"+data.amount.toLocaleString("id-ID")
 
   autoCek()
 }
 
-// CEK MANUAL
+// MANUAL
 async function cekManual(){
   let res = await fetch(`/api/status?id=${transaksiId}`)
   let data = await res.json()
 
-  alert("Status: " + data.status)
+  showNotif("Status: "+data.status)
 }
 
-// AUTO CEK
+// AUTO
 function autoCek(){
-  let interval = setInterval(async () => {
+  let interval = setInterval(async ()=>{
 
     let res = await fetch(`/api/status?id=${transaksiId}`)
     let data = await res.json()
 
     if(data.status === "success"){
       clearInterval(interval)
-      alert("✅ Pembayaran berhasil")
+      showNotif("✅ Pembayaran sukses!")
     }
 
     if(data.status === "expired"){
       clearInterval(interval)
-      alert("❌ Expired")
+      showNotif("❌ QRIS expired")
     }
 
-  }, 5000)
+  },5000)
 }
 
 </script>
