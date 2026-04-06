@@ -1,137 +1,177 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>𝑽𝒊𝒏𝒏 𝑳𝒊𝒔𝒕 𝑷𝒂𝒚𝒎𝒆𝒏𝒕🔥</title>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    integrity="sha512-Ku8T6iJG6VkpMI+zwb6+kEkhTc7HTO3aOrTzvHfWzP7fKb9LhM6k+2BTVAYkC9M9ZIGLQ0LTvVR1KRxP3tG5IA=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-  <style>
-    body {
-      font-family: 'Courier New', monospace;
-      background: radial-gradient(circle at top, #2b1907, #4b2e0e, #1a0e02);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff8dc;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VINN PAYMENT QRIS</title>
 
-    .container {
-      max-width: 500px;
-      width: 90%;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 30px 20px;
-      border-radius: 20px;
-      box-shadow: 0 0 25px gold;
-      border: 1px solid gold;
-      backdrop-filter: blur(10px);
-    }
+<style>
+body{
+  font-family: monospace;
+  background: linear-gradient(135deg,#000,#1a1a1a,#333);
+  color:#fff;
+  text-align:center;
+}
 
-    .logo {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 10px;
-      border-radius: 50%;
-      border: 2px solid gold;
-      box-shadow: 0 0 15px gold;
-      object-fit: cover;
-    }
+.container{
+  margin-top:50px;
+}
 
-    h1 {
-      font-size: 2rem;
-      margin: 10px 0 20px;
-      color: gold;
-      text-shadow: 0 0 10px gold;
-    }
+input{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  text-align:center;
+  width:200px;
+}
 
-    .developer-name {
-      font-size: 1rem;
-      color: #ffeaa7;
-      margin-bottom: 20px;
-    }
+button{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:gold;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
 
-    .payment-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
+button:hover{
+  background:#ffd700;
+}
 
-    .payment-list a {
-      text-decoration: none;
-      background: linear-gradient(90deg, #ffce00, #ffb700);
-      color: #000;
-      padding: 14px;
-      border-radius: 12px;
-      font-weight: bold;
-      box-shadow: 0 0 10px #ffd700;
-      transition: 0.3s;
-    }
+.loader{
+  display:none;
+  margin-top:20px;
+  animation: fade 1s infinite alternate;
+}
 
-    .payment-list a:hover {
-      background: gold;
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px gold, 0 0 40px gold;
-    }
+@keyframes fade{
+  from{opacity:0.3}
+  to{opacity:1}
+}
 
-    .music-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: gold;
-      color: #000;
-      font-weight: bold;
-      font-family: inherit;
-      border: none;
-      box-shadow: 0 0 10px gold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+#qrisBox{
+  display:none;
+  margin-top:20px;
+}
 
-    .music-btn:hover {
-      background: #ffd700;
-      box-shadow: 0 0 20px gold;
-    }
-  </style>
+img{
+  border-radius:15px;
+  box-shadow:0 0 20px gold;
+}
+</style>
 </head>
+
 <body>
-  <!-- Tombol Play Musik -->
-  <button class="music-btn" onclick="playMusic()">🔊 Mainkan Musik</button>
-  <audio id="bgMusic" src="musik.mp3" loop></audio>
 
-  <div class="container">
-    <img src="-media-/logo.png" alt="Logo" class="logo" />
-    <h1>VINN PAYMENT</h1>
-    <div class="developer-name">PAYMENT BY VINN STORE</div>
+<div class="container">
 
-    <p>Pilih metode pembayaran di bawah ini:</p>
+<h2>💳 VINN QRIS PAYMENT</h2>
 
-    <div class="payment-list">
-      <a href="/DANA">💸 Pembayaran Dana</a>
-      <a href="/GOPAY">📲 Pembayaran GoPay</a>
-      <a href="/QRIS">💳 QRIS ALL PAYMENT</a>
-      <a href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I" target="_blank">
-        🔥 My Channel Whatsapp 
-      </a>
-    </div>
-  </div>
+<!-- INPUT -->
+<input type="number" id="nominal" placeholder="Masukkan Nominal"><br>
+<button onclick="buatQR()">🔥 Bayar Sekarang</button>
 
-  <script>
-    function playMusic() {
-      const audio = document.getElementById("bgMusic");
-      audio.play();
+<!-- LOADING -->
+<div class="loader" id="loading">
+  ⏳ Membuat QRIS...
+</div>
+
+<!-- QR -->
+<div id="qrisBox">
+  <img id="qrisImg" width="250"><br><br>
+  <p id="textInfo"></p>
+
+  <button onclick="cekManual()">🔄 Cek Manual</button>
+</div>
+
+</div>
+
+<script>
+
+let transaksiId = null
+
+// ================= CREATE =================
+async function buatQR(){
+  let nominal = document.getElementById("nominal").value
+  if(!nominal) return alert("Isi nominal dulu")
+
+  document.getElementById("loading").style.display="block"
+
+  try{
+    let res = await fetch("/api/create", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ amount: Number(nominal) })
+    })
+
+    let data = await res.json()
+
+    if(!data.success){
+      alert(data.error || "Gagal")
+      return
     }
-  </script>
+
+    transaksiId = data.id
+
+    document.getElementById("loading").style.display="none"
+    document.getElementById("qrisBox").style.display="block"
+
+    document.getElementById("qrisImg").src = data.qr
+    document.getElementById("textInfo").innerText =
+      "Invoice: " + data.id +
+      "\nTotal: Rp" + data.amount.toLocaleString("id-ID")
+
+    autoCek()
+
+  }catch(e){
+    alert("Server error")
+    console.log(e)
+  }
+}
+
+// ================= CEK MANUAL =================
+async function cekManual(){
+  if(!transaksiId) return
+
+  let res = await fetch(`/api/status?id=${transaksiId}`)
+  let data = await res.json()
+
+  if(data.status === "success"){
+    alert("✅ Pembayaran berhasil")
+  }else if(data.status === "expired"){
+    alert("❌ Transaksi expired")
+  }else{
+    alert("⏳ Belum dibayar")
+  }
+}
+
+// ================= AUTO CEK =================
+function autoCek(){
+  let interval = setInterval(async () => {
+
+    if(!transaksiId) return clearInterval(interval)
+
+    let res = await fetch(`/api/status?id=${transaksiId}`)
+    let data = await res.json()
+
+    if(data.status === "success"){
+      clearInterval(interval)
+
+      alert("💳 Pembayaran terdeteksi!\n🚀 Processing...")
+
+      // lanjut ke sistem lu (topup / notif dll)
+    }
+
+    if(data.status === "expired"){
+      clearInterval(interval)
+      alert("❌ QRIS expired")
+    }
+
+  }, 5000)
+}
+
+</script>
+
 </body>
 </html>
