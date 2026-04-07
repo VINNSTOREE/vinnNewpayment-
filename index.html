@@ -17,6 +17,12 @@ body {
   color:#fff;
 }
 
+/* 🌈 RGB ANIMATION */
+@keyframes rgb {
+  0% {filter:hue-rotate(0deg);}
+  100% {filter:hue-rotate(360deg);}
+}
+
 /* CONTAINER */
 .container {
   position: relative;
@@ -25,7 +31,7 @@ body {
   padding:25px;
   border-radius:20px;
   text-align:center;
-  z-index:10;
+  animation: rgb 6s linear infinite;
 }
 
 .container::before {
@@ -33,8 +39,8 @@ body {
   position:absolute;
   inset:-2px;
   border-radius:22px;
-  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
-  animation:spin 6s linear infinite;
+  background: linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
+  animation: spin 6s linear infinite, rgb 6s linear infinite;
   z-index:-1;
 }
 
@@ -47,9 +53,23 @@ body {
   z-index:-1;
 }
 
+/* SPIN */
 @keyframes spin {
   0%{transform:rotate(0deg);}
   100%{transform:rotate(360deg);}
+}
+
+/* LOGO */
+.logo {
+  width:90px;
+  border-radius:50%;
+  box-shadow:0 0 25px #00fff7;
+  animation: rgb 5s linear infinite;
+}
+
+/* TITLE */
+h1 {
+  text-shadow:0 0 15px #00fff7;
 }
 
 /* BUTTON */
@@ -58,44 +78,46 @@ body {
   margin:12px 0;
   padding:14px;
   border-radius:12px;
-  background:rgba(0,255,247,0.1);
+  background:rgba(255,255,255,0.05);
   border:1px solid #00fff7;
-  color:#00fff7;
   font-weight:bold;
   cursor:pointer;
+  transition:.3s;
 }
 
-/* MODAL FIX */
+.btn:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 20px #00fff7;
+}
+
+/* MODAL */
 .modal {
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.9);
+  inset:0;
+  background:rgba(0,0,0,0.85);
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:9999; /* 🔥 INI PENTING */
+  z-index:9999;
 }
 
 /* MODAL BOX */
 .modal-content {
-  position:relative;
-  width:340px;
-  padding:25px;
-  border-radius:20px;
-  text-align:center;
+  position: relative;
+  width: 360px;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  animation: pop 0.4s ease, rgb 6s linear infinite;
 }
 
-/* NEON */
 .modal-content::before {
   content:"";
   position:absolute;
   inset:-2px;
   border-radius:22px;
-  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
-  animation:spin 4s linear infinite;
+  background: linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
+  animation: spin 4s linear infinite, rgb 6s linear infinite;
   z-index:-1;
 }
 
@@ -108,29 +130,37 @@ body {
   z-index:-1;
 }
 
-/* INPUT */
-input {
-  width:80%;
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  text-align:center;
+@keyframes pop {
+  from{transform:scale(0.7);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
-/* QUICK */
+/* QUICK BUTTON */
 .quick {
   display:flex;
-  gap:5px;
+  flex-wrap:wrap;
+  gap:6px;
   justify-content:center;
   margin-bottom:10px;
 }
 
 .quick button {
-  padding:8px;
+  padding:8px 12px;
   border:none;
   border-radius:10px;
-  background:#00fff7;
+  font-weight:bold;
   cursor:pointer;
+  background:#00fff7;
+  animation: rgb 5s linear infinite;
+}
+
+/* INPUT */
+input {
+  width:80%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  text-align:center;
 }
 
 /* QR */
@@ -141,7 +171,20 @@ input {
 
 #qrisImg {
   border-radius:10px;
-  box-shadow:0 0 20px #00fff7;
+  box-shadow:0 0 25px #00fff7;
+  animation: zoom 0.5s ease, rgb 6s linear infinite;
+}
+
+@keyframes zoom {
+  from{transform:scale(0.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* LOADING */
+.loader {
+  display:none;
+  margin-top:10px;
+  animation: rgb 3s linear infinite;
 }
 
 /* NOTIF */
@@ -149,12 +192,12 @@ input {
   position:fixed;
   top:20px;
   right:20px;
+  padding:12px;
+  border-radius:10px;
   background:#111;
   border:1px solid #00fff7;
-  padding:10px;
-  border-radius:10px;
+  box-shadow:0 0 20px #00fff7;
   display:none;
-  z-index:99999;
 }
 </style>
 </head>
@@ -162,48 +205,53 @@ input {
 <body>
 
 <div class="container">
-  <h1 style="color:#00fff7;">VINN PAYMENT</h1>
+  <img src="-media-/logo.png" class="logo">
+  <h1>VINN PAYMENT</h1>
 
   <div class="btn" onclick="openQRIS()">💳 QRIS OTOMATIS</div>
-  <div class="btn">💸 Dana</div>
-  <div class="btn">📲 GoPay</div>
+  <a class="btn" href="/DANA">💸 Dana</a>
+  <a class="btn" href="/GOPAY">📲 GoPay</a>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modalQR">
-  <div class="modal-content">
+<div class="modal-content">
 
-    <h3 style="color:#00fff7;">QRIS PAYMENT</h3>
+<h3>💳 QRIS PAYMENT</h3>
 
-    <div class="quick">
-      <button onclick="setNominal(1000)">1K</button>
-      <button onclick="setNominal(5000)">5K</button>
-      <button onclick="setNominal(10000)">10K</button>
-    </div>
+<div class="quick">
+  <button onclick="setNominal(1000)">1K</button>
+  <button onclick="setNominal(5000)">5K</button>
+  <button onclick="setNominal(10000)">10K</button>
+  <button onclick="setNominal(20000)">20K</button>
+  <button onclick="setNominal(50000)">50K</button>
+  <button onclick="setNominal(100000)">100K</button>
+</div>
 
-    <input type="number" id="nominal" placeholder="Nominal"><br><br>
+<input type="number" id="nominal" placeholder="Masukkan Nominal"><br><br>
 
-    <button onclick="buatQR()">Bayar</button>
+<button onclick="buatQR()">🔥 Bayar Sekarang</button>
 
-    <div id="qrisBox">
-      <img id="qrisImg" width="200"><br>
-      <p id="textInfo"></p>
-    </div>
+<div class="loader" id="loading">⏳ Membuat QRIS...</div>
 
-    <br>
-    <button onclick="closeQRIS()">Tutup</button>
+<div id="qrisBox">
+  <img id="qrisImg" width="200"><br>
+  <p id="textInfo"></p>
+  <button onclick="cekManual()">🔄 Cek Status</button>
+</div>
 
-  </div>
+<br>
+<button onclick="closeQRIS()">Tutup</button>
+
+</div>
 </div>
 
 <div class="notif" id="notif"></div>
 
 <script>
-
 let transaksiId = null
 
 function openQRIS(){
-  console.log("CLICK KEDETEK") // 🔥 debug
   document.getElementById("modalQR").style.display="flex"
 }
 
@@ -218,13 +266,15 @@ function showNotif(text){
   setTimeout(()=> n.style.display="none",3000)
 }
 
-function setNominal(n){
-  document.getElementById("nominal").value = n
+function setNominal(val){
+  document.getElementById("nominal").value = val
 }
 
 async function buatQR(){
   let nominal = document.getElementById("nominal").value
   if(!nominal) return showNotif("Isi nominal dulu")
+
+  document.getElementById("loading").style.display="block"
 
   let res = await fetch("/api/create",{
     method:"POST",
@@ -235,16 +285,45 @@ async function buatQR(){
   let data = await res.json()
 
   if(!data.success){
-    return showNotif("Gagal")
+    showNotif("Gagal buat QR")
+    return
   }
 
   transaksiId = data.id
 
+  document.getElementById("loading").style.display="none"
   document.getElementById("qrisBox").style.display="block"
+
   document.getElementById("qrisImg").src = data.qr
-  document.getElementById("textInfo").innerText = data.id
+  document.getElementById("textInfo").innerText =
+    "Invoice: "+data.id+"\nRp"+Number(data.amount).toLocaleString("id-ID")
+
+  autoCek()
 }
 
+async function cekManual(){
+  if(!transaksiId) return showNotif("Belum ada transaksi")
+
+  let res = await fetch(`/api/status?id=${transaksiId}`)
+  let data = await res.json()
+
+  if(!data.status) return showNotif("Status tidak ditemukan")
+
+  showNotif("Status: "+data.status)
+}
+
+function autoCek(){
+  let interval = setInterval(async ()=>{
+    let res = await fetch(`/api/status?id=${transaksiId}`)
+    let data = await res.json()
+
+    if(data.status === "success"){
+      clearInterval(interval)
+      showNotif("✅ Pembayaran sukses!")
+    }
+
+  },5000)
+}
 </script>
 
 </body>
