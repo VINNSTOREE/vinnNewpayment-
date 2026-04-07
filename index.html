@@ -17,7 +17,7 @@ body {
   color:#fff;
 }
 
-/* 🔥 CONTAINER NEON */
+/* CONTAINER */
 .container {
   position: relative;
   width:90%;
@@ -25,10 +25,9 @@ body {
   padding:25px;
   border-radius:20px;
   text-align:center;
-  z-index:1;
+  z-index:10;
 }
 
-/* NEON BORDER */
 .container::before {
   content:"";
   position:absolute;
@@ -48,23 +47,9 @@ body {
   z-index:-1;
 }
 
-/* ANIMASI */
 @keyframes spin {
   0%{transform:rotate(0deg);}
   100%{transform:rotate(360deg);}
-}
-
-/* LOGO */
-.logo {
-  width:90px;
-  border-radius:50%;
-  box-shadow:0 0 20px #00fff7;
-}
-
-/* TITLE */
-h1 {
-  color:#00fff7;
-  text-shadow:0 0 15px #00fff7;
 }
 
 /* BUTTON */
@@ -78,35 +63,32 @@ h1 {
   color:#00fff7;
   font-weight:bold;
   cursor:pointer;
-  transition:.3s;
 }
 
-.btn:hover {
-  background:#00fff7;
-  color:black;
-  box-shadow:0 0 20px #00fff7;
-}
-
-/* MODAL */
+/* MODAL FIX */
 .modal {
   position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
   display:none;
   justify-content:center;
   align-items:center;
+  z-index:9999; /* 🔥 INI PENTING */
 }
 
-/* MODAL CONTENT NEON */
+/* MODAL BOX */
 .modal-content {
-  position: relative;
-  width: 340px;
-  padding: 25px;
-  border-radius: 20px;
-  text-align: center;
+  position:relative;
+  width:340px;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
 }
 
-/* BORDER NEON */
+/* NEON */
 .modal-content::before {
   content:"";
   position:absolute;
@@ -126,10 +108,19 @@ h1 {
   z-index:-1;
 }
 
+/* INPUT */
+input {
+  width:80%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  text-align:center;
+}
+
 /* QUICK */
 .quick {
   display:flex;
-  gap:6px;
+  gap:5px;
   justify-content:center;
   margin-bottom:10px;
 }
@@ -139,18 +130,7 @@ h1 {
   border:none;
   border-radius:10px;
   background:#00fff7;
-  color:black;
-  font-weight:bold;
   cursor:pointer;
-}
-
-/* INPUT */
-input {
-  width:80%;
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  text-align:center;
 }
 
 /* QR */
@@ -162,19 +142,6 @@ input {
 #qrisImg {
   border-radius:10px;
   box-shadow:0 0 20px #00fff7;
-  animation:zoom 0.5s ease;
-}
-
-@keyframes zoom {
-  from{transform:scale(0.6);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-
-/* LOADING */
-.loader {
-  display:none;
-  margin-top:10px;
-  color:#00fff7;
 }
 
 /* NOTIF */
@@ -182,12 +149,12 @@ input {
   position:fixed;
   top:20px;
   right:20px;
-  background:#0b0f1a;
+  background:#111;
   border:1px solid #00fff7;
-  padding:12px;
+  padding:10px;
   border-radius:10px;
-  box-shadow:0 0 20px #00fff7;
   display:none;
+  z-index:99999;
 }
 </style>
 </head>
@@ -195,52 +162,48 @@ input {
 <body>
 
 <div class="container">
-  <img src="-media-/logo.png" class="logo">
-  <h1>VINN PAYMENT</h1>
+  <h1 style="color:#00fff7;">VINN PAYMENT</h1>
 
   <div class="btn" onclick="openQRIS()">💳 QRIS OTOMATIS</div>
-  <a class="btn" href="/DANA">💸 Dana</a>
-  <a class="btn" href="/GOPAY">📲 GoPay</a>
+  <div class="btn">💸 Dana</div>
+  <div class="btn">📲 GoPay</div>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modalQR">
-<div class="modal-content">
+  <div class="modal-content">
 
-<h3 style="color:#00fff7;">💳 QRIS PAYMENT</h3>
+    <h3 style="color:#00fff7;">QRIS PAYMENT</h3>
 
-<div class="quick">
-  <button onclick="setNominal(1000)">1K</button>
-  <button onclick="setNominal(5000)">5K</button>
-  <button onclick="setNominal(10000)">10K</button>
-  <button onclick="setNominal(50000)">50K</button>
-  <button onclick="setNominal(100000)">100K</button>
-</div>
+    <div class="quick">
+      <button onclick="setNominal(1000)">1K</button>
+      <button onclick="setNominal(5000)">5K</button>
+      <button onclick="setNominal(10000)">10K</button>
+    </div>
 
-<input type="number" id="nominal" placeholder="Masukkan Nominal"><br><br>
+    <input type="number" id="nominal" placeholder="Nominal"><br><br>
 
-<button onclick="buatQR()">🔥 Bayar Sekarang</button>
+    <button onclick="buatQR()">Bayar</button>
 
-<div class="loader" id="loading">⏳ Membuat QRIS...</div>
+    <div id="qrisBox">
+      <img id="qrisImg" width="200"><br>
+      <p id="textInfo"></p>
+    </div>
 
-<div id="qrisBox">
-  <img id="qrisImg" width="200"><br>
-  <p id="textInfo"></p>
-  <button onclick="cekManual()">🔄 Cek Status</button>
-</div>
+    <br>
+    <button onclick="closeQRIS()">Tutup</button>
 
-<br>
-<button onclick="closeQRIS()">Tutup</button>
-
-</div>
+  </div>
 </div>
 
 <div class="notif" id="notif"></div>
 
 <script>
+
 let transaksiId = null
 
 function openQRIS(){
+  console.log("CLICK KEDETEK") // 🔥 debug
   document.getElementById("modalQR").style.display="flex"
 }
 
@@ -255,15 +218,13 @@ function showNotif(text){
   setTimeout(()=> n.style.display="none",3000)
 }
 
-function setNominal(val){
-  document.getElementById("nominal").value = val
+function setNominal(n){
+  document.getElementById("nominal").value = n
 }
 
 async function buatQR(){
   let nominal = document.getElementById("nominal").value
   if(!nominal) return showNotif("Isi nominal dulu")
-
-  document.getElementById("loading").style.display="block"
 
   let res = await fetch("/api/create",{
     method:"POST",
@@ -274,50 +235,16 @@ async function buatQR(){
   let data = await res.json()
 
   if(!data.success){
-    showNotif("Gagal buat QR")
-    return
+    return showNotif("Gagal")
   }
 
   transaksiId = data.id
 
-  document.getElementById("loading").style.display="none"
   document.getElementById("qrisBox").style.display="block"
-
   document.getElementById("qrisImg").src = data.qr
-  document.getElementById("textInfo").innerText =
-    "Invoice: "+data.id+"\nRp"+Number(data.amount).toLocaleString("id-ID")
-
-  autoCek()
+  document.getElementById("textInfo").innerText = data.id
 }
 
-async function cekManual(){
-  if(!transaksiId) return showNotif("Belum ada transaksi")
-
-  let res = await fetch(`/api/status?id=${transaksiId}`)
-  let data = await res.json()
-
-  if(!data.status) return showNotif("Status tidak ditemukan")
-
-  showNotif("Status: "+data.status)
-}
-
-function autoCek(){
-  let interval = setInterval(async ()=>{
-    let res = await fetch(`/api/status?id=${transaksiId}`)
-    let data = await res.json()
-
-    if(data.status === "success"){
-      clearInterval(interval)
-      showNotif("✅ Pembayaran sukses!")
-    }
-
-    if(data.status === "expired"){
-      clearInterval(interval)
-      showNotif("❌ Expired")
-    }
-
-  },5000)
-}
 </script>
 
 </body>
