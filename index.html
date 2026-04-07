@@ -159,9 +159,57 @@ input {
   text-align:center;
 }
 
+/* LOADING */
+.loader {
+  display:none;
+  margin-top:15px;
+  animation: rgb 3s linear infinite;
+}
+
 /* QR */
-#qrisBox {display:none;}
-#successBox {display:none;}
+#qrisBox {
+  display:none;
+  margin-top:10px;
+  position:relative;
+}
+
+#qrisImg {
+  width:200px;
+  border-radius:12px;
+  box-shadow:0 0 30px #00fff7;
+  animation: zoomIn 0.6s ease;
+}
+
+@keyframes zoomIn {
+  from {transform:scale(0.5);opacity:0;}
+  to {transform:scale(1);opacity:1;}
+}
+
+/* SCAN LINE */
+.scan-line {
+  position:absolute;
+  width:200px;
+  height:2px;
+  background:#00fff7;
+  box-shadow:0 0 10px #00fff7;
+  animation: scan 2s infinite;
+}
+
+@keyframes scan {
+  0% {transform:translateY(0);}
+  100% {transform:translateY(200px);}
+}
+
+/* SUCCESS */
+#successBox {
+  display:none;
+  animation: zoom 0.5s ease;
+}
+
+@keyframes zoom {
+  from{transform:scale(0.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
 
 .link-btn {
   display:block;
@@ -204,18 +252,21 @@ input {
 
 <input type="number" id="nominal" placeholder="Nominal"><br><br>
 
-<button onclick="buatQR()">Bayar</button>
+<button onclick="buatQR()">🔥 Bayar Sekarang</button>
+
+<div class="loader" id="loading">⏳ Membuat QRIS...</div>
 
 <div id="qrisBox">
-  <img id="qrisImg" width="200">
+  <div class="scan-line"></div>
+  <img id="qrisImg">
 </div>
 
 <div id="successBox">
   <h2>✅ Pembayaran Sukses</h2>
   <p>Pembayaran terdeteksi</p>
 
-  <a class="link-btn" href="https://wa.me/6285352408213">Chat Owner</a>
-  <a class="link-btn" href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I">Testimoni</a>
+  <a class="link-btn" href="https://wa.me/6285352408213" target="_blank">Chat Owner</a>
+  <a class="link-btn" href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I" target="_blank">Testimoni</a>
 </div>
 
 <br>
@@ -241,6 +292,10 @@ function setNominal(n){
 
 async function buatQR(){
   let nominal=document.getElementById("nominal").value
+  if(!nominal) return alert("Isi nominal dulu")
+
+  document.getElementById("loading").style.display="block"
+  document.getElementById("qrisBox").style.display="none"
 
   let res=await fetch("/api/create",{
     method:"POST",
@@ -252,10 +307,12 @@ async function buatQR(){
 
   transaksiId=data.id
 
-  document.getElementById("qrisBox").style.display="block"
-  document.getElementById("qrisImg").src=data.qr
-
-  autoCek()
+  setTimeout(()=>{
+    document.getElementById("loading").style.display="none"
+    document.getElementById("qrisBox").style.display="block"
+    document.getElementById("qrisImg").src=data.qr
+    autoCek()
+  },1200)
 }
 
 function autoCek(){
