@@ -166,18 +166,19 @@ input {
   animation: rgb 3s linear infinite;
 }
 
-/* QR */
+/* QR PREMIUM */
 #qrisBox {
   display:none;
   margin-top:10px;
-  position:relative;
 }
 
 #qrisImg {
   width:200px;
-  border-radius:12px;
-  box-shadow:0 0 30px #00fff7;
-  animation: zoomIn 0.6s ease;
+  border-radius:14px;
+  box-shadow: 
+    0 0 25px #00fff7,
+    0 0 50px rgba(0,255,247,0.5);
+  animation: zoomIn 0.6s ease, pulse 2s infinite;
 }
 
 @keyframes zoomIn {
@@ -185,19 +186,11 @@ input {
   to {transform:scale(1);opacity:1;}
 }
 
-/* SCAN LINE */
-.scan-line {
-  position:absolute;
-  width:200px;
-  height:2px;
-  background:#00fff7;
-  box-shadow:0 0 10px #00fff7;
-  animation: scan 2s infinite;
-}
-
-@keyframes scan {
-  0% {transform:translateY(0);}
-  100% {transform:translateY(200px);}
+/* efek denyut */
+@keyframes pulse {
+  0% {box-shadow: 0 0 20px #00fff7;}
+  50% {box-shadow: 0 0 40px #00fff7;}
+  100% {box-shadow: 0 0 20px #00fff7;}
 }
 
 /* SUCCESS */
@@ -257,7 +250,6 @@ input {
 <div class="loader" id="loading">⏳ Membuat QRIS...</div>
 
 <div id="qrisBox">
-  <div class="scan-line"></div>
   <img id="qrisImg">
 </div>
 
