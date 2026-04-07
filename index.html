@@ -7,79 +7,60 @@
 
 <style>
 body {
-  font-family: monospace;
-  background: #05070d;
-  overflow:hidden;
   margin:0;
-  color:#fff;
-}
-
-/* ⚡ LIGHTNING EFFECT */
-.lightning {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:transparent;
-  pointer-events:none;
-}
-
-.lightning::before,
-.lightning::after {
-  content:"";
-  position:absolute;
-  width:2px;
-  height:100%;
-  background:linear-gradient(white, transparent);
-  opacity:0;
-  animation: flash 5s infinite;
-}
-
-.lightning::after {
-  left:60%;
-  animation-delay:2s;
-}
-
-@keyframes flash {
-  0%,90%,100% {opacity:0;}
-  92% {opacity:1;}
-  93% {opacity:0;}
-}
-
-/* CENTER */
-body {
+  font-family: monospace;
+  background:#05070d;
+  overflow:hidden;
+  color:white;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
 }
 
+/* ⚡ PETIR */
+.lightning::before, .lightning::after {
+  content:"";
+  position:absolute;
+  width:2px;
+  height:100%;
+  background:linear-gradient(white,transparent);
+  opacity:0;
+  animation:flash 5s infinite;
+}
+.lightning::after { left:70%; animation-delay:2s; }
+
+@keyframes flash {
+  0%,90%,100%{opacity:0;}
+  92%{opacity:1;}
+  93%{opacity:0;}
+}
+
 /* RGB */
 @keyframes rgb {
-  0%{filter:hue-rotate(0deg);}
+  0%{filter:hue-rotate(0);}
   100%{filter:hue-rotate(360deg);}
 }
 
-/* CONTAINER */
+/* BOX */
 .container {
-  position: relative;
   width:90%;
   max-width:400px;
   padding:25px;
   border-radius:20px;
   text-align:center;
-  animation: rgb 6s linear infinite;
+  position:relative;
+  animation:rgb 6s linear infinite;
 }
-
 .container::before {
   content:"";
   position:absolute;
   inset:-2px;
-  border-radius:22px;
-  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
-  animation: spin 6s linear infinite, rgb 6s linear infinite;
+  border-radius:20px;
+  background:linear-gradient(0deg,#00fff7,#00ffaa,#00ffcc);
+  animation:spin 6s linear infinite, rgb 6s linear infinite;
   z-index:-1;
 }
-
 .container::after {
   content:"";
   position:absolute;
@@ -90,7 +71,7 @@ body {
 }
 
 @keyframes spin {
-  0%{transform:rotate(0deg);}
+  0%{transform:rotate(0);}
   100%{transform:rotate(360deg);}
 }
 
@@ -104,10 +85,9 @@ body {
 /* BUTTON */
 .btn {
   display:block;
-  margin:12px 0;
+  margin:10px 0;
   padding:14px;
   border-radius:12px;
-  background:rgba(255,255,255,0.05);
   border:1px solid #00fff7;
   cursor:pointer;
 }
@@ -116,33 +96,31 @@ body {
 .modal {
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.9);
   display:none;
   justify-content:center;
   align-items:center;
+  background:rgba(0,0,0,0.9);
   z-index:9999;
 }
 
-/* MODAL */
+/* MODAL BOX */
 .modal-content {
-  position: relative;
-  width: 360px;
-  padding: 25px;
-  border-radius: 20px;
-  text-align: center;
-  animation: pop 0.4s ease, rgb 6s linear infinite;
+  width:350px;
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+  position:relative;
+  animation:pop .3s ease, rgb 6s linear infinite;
 }
-
 .modal-content::before {
   content:"";
   position:absolute;
   inset:-2px;
-  border-radius:22px;
-  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
-  animation: spin 4s linear infinite, rgb 6s linear infinite;
+  border-radius:20px;
+  background:linear-gradient(0deg,#00fff7,#00ffaa,#00ffcc);
+  animation:spin 4s linear infinite, rgb 6s linear infinite;
   z-index:-1;
 }
-
 .modal-content::after {
   content:"";
   position:absolute;
@@ -153,7 +131,7 @@ body {
 }
 
 @keyframes pop {
-  from{transform:scale(0.7);opacity:0}
+  from{transform:scale(.6);opacity:0}
   to{transform:scale(1);opacity:1}
 }
 
@@ -161,34 +139,33 @@ body {
 .quick {
   display:flex;
   flex-wrap:wrap;
-  gap:6px;
+  gap:5px;
   justify-content:center;
 }
-
 .quick button {
-  padding:8px;
+  padding:7px;
   border:none;
   border-radius:10px;
   background:#00fff7;
+  cursor:pointer;
+}
+
+/* INPUT */
+input {
+  width:80%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  text-align:center;
 }
 
 /* QR */
-#qrisBox { display:none; margin-top:10px; }
-
-/* SUCCESS */
-#successBox {
-  display:none;
-  animation: zoom 0.5s ease;
-}
-
-@keyframes zoom {
-  from{transform:scale(0.6);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
+#qrisBox {display:none;}
+#successBox {display:none;}
 
 .link-btn {
   display:block;
-  margin:10px;
+  margin:8px;
   padding:12px;
   border-radius:10px;
   background:#00fff7;
@@ -204,9 +181,11 @@ body {
 
 <div class="container">
   <img src="-media-/logo.png" class="logo">
-  <h1>VINN PAYMENT</h1>
+  <h2>VINN PAYMENT</h2>
 
   <div class="btn" onclick="openQRIS()">💳 QRIS OTOMATIS</div>
+  <a class="btn" href="/DANA">💸 Dana</a>
+  <a class="btn" href="/GOPAY">📲 GoPay</a>
 </div>
 
 <div class="modal" id="modalQR">
@@ -228,15 +207,15 @@ body {
 <button onclick="buatQR()">Bayar</button>
 
 <div id="qrisBox">
-  <img id="qrisImg" width="200"><br>
+  <img id="qrisImg" width="200">
 </div>
 
 <div id="successBox">
   <h2>✅ Pembayaran Sukses</h2>
   <p>Pembayaran terdeteksi</p>
 
-  <a class="link-btn" href="https://wa.me/6285352408213" target="_blank">Chat Owner</a>
-  <a class="link-btn" href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I" target="_blank">Testimoni</a>
+  <a class="link-btn" href="https://wa.me/6285352408213">Chat Owner</a>
+  <a class="link-btn" href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I">Testimoni</a>
 </div>
 
 <br>
@@ -246,7 +225,7 @@ body {
 </div>
 
 <script>
-let transaksiId=null
+let transaksiId
 
 function openQRIS(){
   document.getElementById("modalQR").style.display="flex"
@@ -280,13 +259,12 @@ async function buatQR(){
 }
 
 function autoCek(){
-  let int=setInterval(async ()=>{
+  let i=setInterval(async()=>{
     let res=await fetch(`/api/status?id=${transaksiId}`)
     let data=await res.json()
 
     if(data.status==="success"){
-      clearInterval(int)
-
+      clearInterval(i)
       document.getElementById("qrisBox").style.display="none"
       document.getElementById("successBox").style.display="block"
     }
