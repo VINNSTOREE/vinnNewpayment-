@@ -8,53 +8,83 @@
 <style>
 body {
   font-family: monospace;
-  background: radial-gradient(circle at top, #2b1907, #4b2e0e, #1a0e02);
+  background: radial-gradient(circle at top, #0a0f1f, #05070d);
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
   margin:0;
-  color:#fff8dc;
+  color:#fff;
 }
 
-/* CONTAINER */
+/* 🔥 CONTAINER NEON */
 .container {
+  position: relative;
   width:90%;
   max-width:400px;
-  background:rgba(0,0,0,0.4);
   padding:25px;
   border-radius:20px;
-  border:1px solid gold;
-  box-shadow:0 0 30px gold;
   text-align:center;
+  z-index:1;
 }
 
+/* NEON BORDER */
+.container::before {
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:22px;
+  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
+  animation:spin 6s linear infinite;
+  z-index:-1;
+}
+
+.container::after {
+  content:"";
+  position:absolute;
+  inset:2px;
+  background:#0b0f1a;
+  border-radius:20px;
+  z-index:-1;
+}
+
+/* ANIMASI */
+@keyframes spin {
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+
+/* LOGO */
 .logo {
   width:90px;
   border-radius:50%;
-  border:2px solid gold;
-  box-shadow:0 0 20px gold;
+  box-shadow:0 0 20px #00fff7;
 }
 
+/* TITLE */
 h1 {
-  color:gold;
+  color:#00fff7;
+  text-shadow:0 0 15px #00fff7;
 }
 
 /* BUTTON */
 .btn {
   display:block;
-  margin:10px 0;
+  margin:12px 0;
   padding:14px;
   border-radius:12px;
-  background:linear-gradient(90deg,#ffd700,#ffaa00);
-  color:black;
+  background:rgba(0,255,247,0.1);
+  border:1px solid #00fff7;
+  color:#00fff7;
   font-weight:bold;
   cursor:pointer;
+  transition:.3s;
 }
 
 .btn:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 20px gold;
+  background:#00fff7;
+  color:black;
+  box-shadow:0 0 20px #00fff7;
 }
 
 /* MODAL */
@@ -67,75 +97,57 @@ h1 {
   align-items:center;
 }
 
-/* 🔥 MODAL SULTAN */
+/* MODAL CONTENT NEON */
 .modal-content {
   position: relative;
   width: 340px;
   padding: 25px;
   border-radius: 20px;
   text-align: center;
-  animation: pop 0.5s ease;
 }
 
-/* NEON BORDER */
+/* BORDER NEON */
 .modal-content::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 22px;
-  background: linear-gradient(0deg, gold, #ffcc00, #ffaa00, gold);
-  animation: spin 4s linear infinite;
-  z-index: -1;
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:22px;
+  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
+  animation:spin 4s linear infinite;
+  z-index:-1;
 }
 
-/* INNER BG */
 .modal-content::after {
-  content: "";
-  position: absolute;
-  inset: 2px;
-  background: #111;
-  border-radius: 20px;
-  z-index: -1;
+  content:"";
+  position:absolute;
+  inset:2px;
+  background:#0b0f1a;
+  border-radius:20px;
+  z-index:-1;
 }
 
-/* ANIMASI */
-@keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
-}
-
-@keyframes pop {
-  from {transform:scale(0.7);opacity:0}
-  to {transform:scale(1);opacity:1}
-}
-
-/* QUICK BUTTON */
+/* QUICK */
 .quick {
   display:flex;
-  justify-content:center;
   gap:6px;
+  justify-content:center;
   margin-bottom:10px;
 }
 
 .quick button {
-  padding:8px 10px;
+  padding:8px;
   border:none;
   border-radius:10px;
-  background:gold;
+  background:#00fff7;
+  color:black;
   font-weight:bold;
   cursor:pointer;
-  box-shadow:0 0 10px gold;
-}
-
-.quick button:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px gold;
 }
 
 /* INPUT */
 input {
   width:80%;
-  padding:12px;
+  padding:10px;
   border-radius:10px;
   border:none;
   text-align:center;
@@ -149,25 +161,20 @@ input {
 
 #qrisImg {
   border-radius:10px;
-  box-shadow:0 0 20px gold;
-  animation: zoomFade 0.6s ease;
+  box-shadow:0 0 20px #00fff7;
+  animation:zoom 0.5s ease;
 }
 
-@keyframes zoomFade {
-  from {opacity:0; transform:scale(0.6);}
-  to {opacity:1; transform:scale(1);}
+@keyframes zoom {
+  from{transform:scale(0.6);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 /* LOADING */
 .loader {
   display:none;
   margin-top:10px;
-  animation:fade 1s infinite alternate;
-}
-
-@keyframes fade {
-  from{opacity:0.3}
-  to{opacity:1}
+  color:#00fff7;
 }
 
 /* NOTIF */
@@ -175,11 +182,11 @@ input {
   position:fixed;
   top:20px;
   right:20px;
-  background:#111;
-  border:1px solid gold;
+  background:#0b0f1a;
+  border:1px solid #00fff7;
   padding:12px;
   border-radius:10px;
-  box-shadow:0 0 20px gold;
+  box-shadow:0 0 20px #00fff7;
   display:none;
 }
 </style>
@@ -200,7 +207,7 @@ input {
 <div class="modal" id="modalQR">
 <div class="modal-content">
 
-<h3 style="color:gold;">💳 QRIS PAYMENT</h3>
+<h3 style="color:#00fff7;">💳 QRIS PAYMENT</h3>
 
 <div class="quick">
   <button onclick="setNominal(1000)">1K</button>
@@ -231,7 +238,6 @@ input {
 <div class="notif" id="notif"></div>
 
 <script>
-
 let transaksiId = null
 
 function openQRIS(){
@@ -253,10 +259,9 @@ function setNominal(val){
   document.getElementById("nominal").value = val
 }
 
-// CREATE
 async function buatQR(){
   let nominal = document.getElementById("nominal").value
-  if(!nominal) return showNotif("⚠️ Isi nominal dulu")
+  if(!nominal) return showNotif("Isi nominal dulu")
 
   document.getElementById("loading").style.display="block"
 
@@ -269,7 +274,7 @@ async function buatQR(){
   let data = await res.json()
 
   if(!data.success){
-    showNotif(data.error || "❌ Gagal buat QR")
+    showNotif("Gagal buat QR")
     return
   }
 
@@ -285,48 +290,34 @@ async function buatQR(){
   autoCek()
 }
 
-// CEK MANUAL (FIX)
 async function cekManual(){
-  if(!transaksiId) return showNotif("❌ Belum ada transaksi")
+  if(!transaksiId) return showNotif("Belum ada transaksi")
 
   let res = await fetch(`/api/status?id=${transaksiId}`)
   let data = await res.json()
 
-  if(!data || !data.status){
-    return showNotif("⚠️ Status tidak ditemukan")
-  }
+  if(!data.status) return showNotif("Status tidak ditemukan")
 
-  if(data.status === "success"){
-    showNotif("✅ Pembayaran sukses!")
-  }else if(data.status === "pending"){
-    showNotif("⏳ Menunggu pembayaran")
-  }else if(data.status === "expired"){
-    showNotif("❌ QRIS expired")
-  }else{
-    showNotif("⚠️ Status: "+data.status)
-  }
+  showNotif("Status: "+data.status)
 }
 
-// AUTO CEK
 function autoCek(){
   let interval = setInterval(async ()=>{
-
     let res = await fetch(`/api/status?id=${transaksiId}`)
     let data = await res.json()
 
     if(data.status === "success"){
       clearInterval(interval)
-      showNotif("✅ Pembayaran berhasil!")
+      showNotif("✅ Pembayaran sukses!")
     }
 
     if(data.status === "expired"){
       clearInterval(interval)
-      showNotif("❌ QRIS expired")
+      showNotif("❌ Expired")
     }
 
   },5000)
 }
-
 </script>
 
 </body>
