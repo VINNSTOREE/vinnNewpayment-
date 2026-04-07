@@ -8,19 +8,55 @@
 <style>
 body {
   font-family: monospace;
-  background: radial-gradient(circle at top, #0a0f1f, #05070d);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+  background: #05070d;
+  overflow:hidden;
   margin:0;
   color:#fff;
 }
 
-/* 🌈 RGB ANIMATION */
+/* ⚡ LIGHTNING EFFECT */
+.lightning {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:transparent;
+  pointer-events:none;
+}
+
+.lightning::before,
+.lightning::after {
+  content:"";
+  position:absolute;
+  width:2px;
+  height:100%;
+  background:linear-gradient(white, transparent);
+  opacity:0;
+  animation: flash 5s infinite;
+}
+
+.lightning::after {
+  left:60%;
+  animation-delay:2s;
+}
+
+@keyframes flash {
+  0%,90%,100% {opacity:0;}
+  92% {opacity:1;}
+  93% {opacity:0;}
+}
+
+/* CENTER */
+body {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+/* RGB */
 @keyframes rgb {
-  0% {filter:hue-rotate(0deg);}
-  100% {filter:hue-rotate(360deg);}
+  0%{filter:hue-rotate(0deg);}
+  100%{filter:hue-rotate(360deg);}
 }
 
 /* CONTAINER */
@@ -39,7 +75,7 @@ body {
   position:absolute;
   inset:-2px;
   border-radius:22px;
-  background: linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
+  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
   animation: spin 6s linear infinite, rgb 6s linear infinite;
   z-index:-1;
 }
@@ -53,7 +89,6 @@ body {
   z-index:-1;
 }
 
-/* SPIN */
 @keyframes spin {
   0%{transform:rotate(0deg);}
   100%{transform:rotate(360deg);}
@@ -63,13 +98,7 @@ body {
 .logo {
   width:90px;
   border-radius:50%;
-  box-shadow:0 0 25px #00fff7;
-  animation: rgb 5s linear infinite;
-}
-
-/* TITLE */
-h1 {
-  text-shadow:0 0 15px #00fff7;
+  box-shadow:0 0 30px #00fff7;
 }
 
 /* BUTTON */
@@ -80,28 +109,21 @@ h1 {
   border-radius:12px;
   background:rgba(255,255,255,0.05);
   border:1px solid #00fff7;
-  font-weight:bold;
   cursor:pointer;
-  transition:.3s;
-}
-
-.btn:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 20px #00fff7;
 }
 
 /* MODAL */
 .modal {
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,0,0.9);
   display:none;
   justify-content:center;
   align-items:center;
   z-index:9999;
 }
 
-/* MODAL BOX */
+/* MODAL */
 .modal-content {
   position: relative;
   width: 360px;
@@ -116,7 +138,7 @@ h1 {
   position:absolute;
   inset:-2px;
   border-radius:22px;
-  background: linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
+  background:linear-gradient(0deg,#00fff7,#00ffcc,#00ffaa,#00fff7);
   animation: spin 4s linear infinite, rgb 6s linear infinite;
   z-index:-1;
 }
@@ -135,44 +157,28 @@ h1 {
   to{transform:scale(1);opacity:1}
 }
 
-/* QUICK BUTTON */
+/* QUICK */
 .quick {
   display:flex;
   flex-wrap:wrap;
   gap:6px;
   justify-content:center;
-  margin-bottom:10px;
 }
 
 .quick button {
-  padding:8px 12px;
+  padding:8px;
   border:none;
   border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
   background:#00fff7;
-  animation: rgb 5s linear infinite;
-}
-
-/* INPUT */
-input {
-  width:80%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  text-align:center;
 }
 
 /* QR */
-#qrisBox {
-  display:none;
-  margin-top:10px;
-}
+#qrisBox { display:none; margin-top:10px; }
 
-#qrisImg {
-  border-radius:10px;
-  box-shadow:0 0 25px #00fff7;
-  animation: zoom 0.5s ease, rgb 6s linear infinite;
+/* SUCCESS */
+#successBox {
+  display:none;
+  animation: zoom 0.5s ease;
 }
 
 @keyframes zoom {
@@ -180,44 +186,33 @@ input {
   to{transform:scale(1);opacity:1}
 }
 
-/* LOADING */
-.loader {
-  display:none;
-  margin-top:10px;
-  animation: rgb 3s linear infinite;
-}
-
-/* NOTIF */
-.notif {
-  position:fixed;
-  top:20px;
-  right:20px;
+.link-btn {
+  display:block;
+  margin:10px;
   padding:12px;
   border-radius:10px;
-  background:#111;
-  border:1px solid #00fff7;
-  box-shadow:0 0 20px #00fff7;
-  display:none;
+  background:#00fff7;
+  color:black;
+  text-decoration:none;
 }
 </style>
 </head>
 
 <body>
 
+<div class="lightning"></div>
+
 <div class="container">
   <img src="-media-/logo.png" class="logo">
   <h1>VINN PAYMENT</h1>
 
   <div class="btn" onclick="openQRIS()">💳 QRIS OTOMATIS</div>
-  <a class="btn" href="/DANA">💸 Dana</a>
-  <a class="btn" href="/GOPAY">📲 GoPay</a>
 </div>
 
-<!-- MODAL -->
 <div class="modal" id="modalQR">
 <div class="modal-content">
 
-<h3>💳 QRIS PAYMENT</h3>
+<h3>QRIS PAYMENT</h3>
 
 <div class="quick">
   <button onclick="setNominal(1000)">1K</button>
@@ -228,16 +223,20 @@ input {
   <button onclick="setNominal(100000)">100K</button>
 </div>
 
-<input type="number" id="nominal" placeholder="Masukkan Nominal"><br><br>
+<input type="number" id="nominal" placeholder="Nominal"><br><br>
 
-<button onclick="buatQR()">🔥 Bayar Sekarang</button>
-
-<div class="loader" id="loading">⏳ Membuat QRIS...</div>
+<button onclick="buatQR()">Bayar</button>
 
 <div id="qrisBox">
   <img id="qrisImg" width="200"><br>
-  <p id="textInfo"></p>
-  <button onclick="cekManual()">🔄 Cek Status</button>
+</div>
+
+<div id="successBox">
+  <h2>✅ Pembayaran Sukses</h2>
+  <p>Pembayaran terdeteksi</p>
+
+  <a class="link-btn" href="https://wa.me/6285352408213" target="_blank">Chat Owner</a>
+  <a class="link-btn" href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I" target="_blank">Testimoni</a>
 </div>
 
 <br>
@@ -246,10 +245,8 @@ input {
 </div>
 </div>
 
-<div class="notif" id="notif"></div>
-
 <script>
-let transaksiId = null
+let transaksiId=null
 
 function openQRIS(){
   document.getElementById("modalQR").style.display="flex"
@@ -259,70 +256,41 @@ function closeQRIS(){
   document.getElementById("modalQR").style.display="none"
 }
 
-function showNotif(text){
-  let n = document.getElementById("notif")
-  n.innerText = text
-  n.style.display="block"
-  setTimeout(()=> n.style.display="none",3000)
-}
-
-function setNominal(val){
-  document.getElementById("nominal").value = val
+function setNominal(n){
+  document.getElementById("nominal").value=n
 }
 
 async function buatQR(){
-  let nominal = document.getElementById("nominal").value
-  if(!nominal) return showNotif("Isi nominal dulu")
+  let nominal=document.getElementById("nominal").value
 
-  document.getElementById("loading").style.display="block"
-
-  let res = await fetch("/api/create",{
+  let res=await fetch("/api/create",{
     method:"POST",
     headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ amount:Number(nominal) })
+    body:JSON.stringify({ amount:Number(nominal) })
   })
 
-  let data = await res.json()
+  let data=await res.json()
 
-  if(!data.success){
-    showNotif("Gagal buat QR")
-    return
-  }
+  transaksiId=data.id
 
-  transaksiId = data.id
-
-  document.getElementById("loading").style.display="none"
   document.getElementById("qrisBox").style.display="block"
-
-  document.getElementById("qrisImg").src = data.qr
-  document.getElementById("textInfo").innerText =
-    "Invoice: "+data.id+"\nRp"+Number(data.amount).toLocaleString("id-ID")
+  document.getElementById("qrisImg").src=data.qr
 
   autoCek()
 }
 
-async function cekManual(){
-  if(!transaksiId) return showNotif("Belum ada transaksi")
-
-  let res = await fetch(`/api/status?id=${transaksiId}`)
-  let data = await res.json()
-
-  if(!data.status) return showNotif("Status tidak ditemukan")
-
-  showNotif("Status: "+data.status)
-}
-
 function autoCek(){
-  let interval = setInterval(async ()=>{
-    let res = await fetch(`/api/status?id=${transaksiId}`)
-    let data = await res.json()
+  let int=setInterval(async ()=>{
+    let res=await fetch(`/api/status?id=${transaksiId}`)
+    let data=await res.json()
 
-    if(data.status === "success"){
-      clearInterval(interval)
-      showNotif("✅ Pembayaran sukses!")
+    if(data.status==="success"){
+      clearInterval(int)
+
+      document.getElementById("qrisBox").style.display="none"
+      document.getElementById("successBox").style.display="block"
     }
-
-  },5000)
+  },4000)
 }
 </script>
 
