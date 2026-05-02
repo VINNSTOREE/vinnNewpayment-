@@ -12,12 +12,9 @@ body {
   color:white;
   height:100vh;
   overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
 }
 
-/* 🔥 VIDEO BACKGROUND (FIXED CLEAN VERSION) */
+/* 🔥 VIDEO BACKGROUND FIX */
 #bgVideo {
   position:fixed;
   top:0;
@@ -32,21 +29,23 @@ body {
 .overlay {
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.55);
+  background:rgba(0,0,0,0.6);
   z-index:-1;
 }
 
-/* CONTAINER */
+/* CENTER BOX */
 .container {
   position:relative;
   z-index:1;
   width:90%;
   max-width:400px;
-  padding:25px;
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
   text-align:center;
-  background:rgba(0,0,0,0.45);
+  padding:20px;
+  background:rgba(0,0,0,0.4);
   border-radius:20px;
-  backdrop-filter:blur(6px);
 }
 
 /* LOGO */
@@ -63,8 +62,8 @@ body {
   padding:14px;
   border-radius:12px;
   border:1px solid #00fff7;
-  text-decoration:none;
   color:white;
+  text-decoration:none;
   cursor:pointer;
 }
 
@@ -99,7 +98,7 @@ input {
 /* QUICK */
 .quick {
   display:grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:10px;
   margin:10px 0;
 }
@@ -154,15 +153,14 @@ input {
 
 <body>
 
-<!-- 🔥 VIDEO BACKGROUND (FIX PALING AMAN) -->
-<video id="bgVideo" autoplay muted loop playsinline preload="auto">
-  <source src="video.mp4" type="video/mp4">
+<!-- 🔥 VIDEO BACKGROUND (INI INTI FIX) -->
+<video id="bgVideo" autoplay muted loop playsinline>
+  <source src="./video.mp4" type="video/mp4">
 </video>
 
-<!-- OVERLAY -->
 <div class="overlay"></div>
 
-<!-- MAIN -->
+<!-- UI -->
 <div class="container">
   <img src="-media-/logo.png" class="logo">
   <h2>VINN PAYMENT</h2>
