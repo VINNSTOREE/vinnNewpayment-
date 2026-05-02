@@ -17,18 +17,18 @@ body {
   overflow:hidden;
 }
 
-/* BACKGROUND VIDEO */
+/* VIDEO BACKGROUND */
 #bgVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover;
-  z-index: -2;
+  position:fixed;
+  right:0;
+  bottom:0;
+  min-width:100%;
+  min-height:100%;
+  object-fit:cover;
+  z-index:-2;
 }
 
-/* OVERLAY */
+/* DARK OVERLAY */
 body::before {
   content:"";
   position:fixed;
@@ -52,6 +52,8 @@ body::before {
   text-align:center;
   position:relative;
   animation:rgb 6s linear infinite;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
 }
 .container::before {
   content:"";
@@ -179,15 +181,37 @@ input {
   text-decoration:none;
   font-weight:bold;
 }
+
+/* START SOUND BUTTON */
+#startBtn {
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:#00fff7;
+  font-weight:bold;
+  cursor:pointer;
+  z-index:9999;
+}
 </style>
 </head>
 
 <body>
 
 <!-- VIDEO BACKGROUND -->
-<video autoplay muted loop id="bgVideo">
+<video id="bgVideo" loop>
   <source src="video.mp4" type="video/mp4">
 </video>
+
+<!-- AUDIO BACKGROUND -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<!-- START SOUND -->
+<button id="startBtn" onclick="startMedia()">▶ START SOUND</button>
 
 <div class="container">
   <img src="-media-/logo.png" class="logo">
@@ -198,6 +222,7 @@ input {
   <a class="btn" href="/GOPAY">📲 GoPay</a>
 </div>
 
+<!-- MODAL -->
 <div class="modal" id="modalQR">
 <div class="modal-content">
 
@@ -242,6 +267,12 @@ input {
 
 <script>
 let transaksiId, progress=0, intervalCek, intervalProgress, timeLeft=300
+
+function startMedia(){
+  document.getElementById("bgVideo").play()
+  document.getElementById("bgMusic").play()
+  document.getElementById("startBtn").style.display="none"
+}
 
 function openQRIS(){
   document.getElementById("modalQR").style.display="flex"
@@ -313,4 +344,4 @@ function autoCek(){
 </script>
 
 </body>
-</html>
+  </html>
