@@ -10,57 +10,58 @@ body {
   margin:0;
   font-family: monospace;
   color:white;
+  height:100vh;
+  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
-  overflow:hidden;
 }
 
-/* VIDEO BACKGROUND */
+/* 🔥 VIDEO BACKGROUND (FIXED CLEAN VERSION) */
 #bgVideo {
   position:fixed;
-  right:0;
-  bottom:0;
-  min-width:100%;
-  min-height:100%;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
   object-fit:cover;
   z-index:-2;
 }
 
 /* DARK OVERLAY */
-body::before {
-  content:"";
+.overlay {
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.55);
   z-index:-1;
 }
 
-/* BOX */
+/* CONTAINER */
 .container {
+  position:relative;
+  z-index:1;
   width:90%;
   max-width:400px;
   padding:25px;
-  border-radius:20px;
   text-align:center;
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.45);
+  border-radius:20px;
+  backdrop-filter:blur(6px);
 }
 
 /* LOGO */
 .logo {
-  width:100px;
+  width:90px;
   border-radius:50%;
-  box-shadow:0 0 40px #00fff7;
+  box-shadow:0 0 25px #00fff7;
 }
 
 /* BUTTON */
 .btn {
   display:block;
   margin:12px 0;
-  padding:15px;
-  border-radius:14px;
+  padding:14px;
+  border-radius:12px;
   border:1px solid #00fff7;
   text-decoration:none;
   color:white;
@@ -75,13 +76,15 @@ body::before {
   justify-content:center;
   align-items:center;
   background:rgba(0,0,0,0.9);
+  z-index:10;
 }
 
 .modal-content {
-  width:370px;
-  padding:25px;
+  width:350px;
+  padding:20px;
   border-radius:20px;
   text-align:center;
+  background:#111;
 }
 
 /* INPUT */
@@ -96,17 +99,17 @@ input {
 /* QUICK */
 .quick {
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3,1fr);
   gap:10px;
-  margin-bottom:10px;
+  margin:10px 0;
 }
 
 .quick button {
-  padding:12px;
+  padding:10px;
   border:none;
-  border-radius:12px;
-  font-weight:bold;
+  border-radius:10px;
   background:#00fff7;
+  font-weight:bold;
   cursor:pointer;
 }
 
@@ -114,9 +117,9 @@ input {
 #qrisBox {display:none;}
 
 #qrisImg {
-  width:220px;
-  border-radius:16px;
-  box-shadow:0 0 40px #00fff7;
+  width:200px;
+  border-radius:15px;
+  box-shadow:0 0 30px #00fff7;
 }
 
 /* PROGRESS */
@@ -139,7 +142,7 @@ input {
 .link-btn {
   display:block;
   margin:10px;
-  padding:14px;
+  padding:12px;
   border-radius:12px;
   background:#00fff7;
   color:black;
@@ -151,16 +154,15 @@ input {
 
 <body>
 
-<!-- 🔥 VIDEO BACKGROUND (FIXED AUTO PLAY) -->
+<!-- 🔥 VIDEO BACKGROUND (FIX PALING AMAN) -->
 <video id="bgVideo" autoplay muted loop playsinline preload="auto">
   <source src="video.mp4" type="video/mp4">
 </video>
 
-<!-- AUDIO BACKGROUND -->
-<audio id="bgMusic" autoplay loop>
-  <source src="music.mp3" type="audio/mp3">
-</audio>
+<!-- OVERLAY -->
+<div class="overlay"></div>
 
+<!-- MAIN -->
 <div class="container">
   <img src="-media-/logo.png" class="logo">
   <h2>VINN PAYMENT</h2>
@@ -172,49 +174,48 @@ input {
 
 <!-- MODAL -->
 <div class="modal" id="modalQR">
-<div class="modal-content">
+  <div class="modal-content">
 
-<h3>QRIS PAYMENT</h3>
+    <h3>QRIS PAYMENT</h3>
 
-<div class="quick">
-  <button onclick="setNominal(1000)">1K</button>
-  <button onclick="setNominal(10000)">10K</button>
-  <button onclick="setNominal(50000)">50K</button>
-  <button onclick="setNominal(100000)">100K</button>
-  <button onclick="setNominal(200000)">200K</button>
-</div>
+    <div class="quick">
+      <button onclick="setNominal(1000)">1K</button>
+      <button onclick="setNominal(10000)">10K</button>
+      <button onclick="setNominal(50000)">50K</button>
+      <button onclick="setNominal(100000)">100K</button>
+      <button onclick="setNominal(200000)">200K</button>
+    </div>
 
-<input type="number" id="nominal" placeholder="Masukkan nominal"><br><br>
+    <input type="number" id="nominal" placeholder="Masukkan nominal"><br><br>
 
-<button id="btnBayar" onclick="buatQR()">🔥 Bayar Sekarang</button>
+    <button onclick="buatQR()">🔥 Bayar Sekarang</button>
 
-<div id="qrisBox">
-  <img id="qrisImg"><br>
+    <div id="qrisBox">
+      <img id="qrisImg"><br>
+      <div id="trxId"></div>
+      <div id="timer"></div>
 
-  <div id="trxId"></div>
-  <div id="timer"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+      </div>
 
-  <div class="progress-bar">
-    <div class="progress-fill" id="progress"></div>
+      <button onclick="cekManual()">🔄 Cek Status</button>
+    </div>
+
+    <div id="successBox">
+      <h2>✅ PEMBAYARAN SUKSES</h2>
+
+      <a class="link-btn" href="https://wa.me/6285352408213">Chat Owner</a>
+      <a class="link-btn" href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I">Testimoni</a>
+    </div>
+
   </div>
-
-  <button onclick="cekManual()">🔄 Cek Status</button>
 </div>
-
-<div id="successBox">
-  <h2>✅ PEMBAYARAN SUKSES</h2>
-
-  <a class="link-btn" href="https://wa.me/6285352408213">Chat Owner</a>
-  <a class="link-btn" href="https://whatsapp.com/channel/0029VadiD8q9WtBuMNO3R72I">Testimoni</a>
-</div>
-
-</div>
-</div>
-
-<audio id="sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
 
 <script>
-let transaksiId, progress=0, intervalCek, intervalProgress, timeLeft=300
+let transaksiId;
+let progress=0;
+let timeLeft=300;
 
 function openQRIS(){
   document.getElementById("modalQR").style.display="flex"
@@ -228,9 +229,13 @@ async function buatQR(){
   let nominal=document.getElementById("nominal").value
   if(!nominal) return alert("Isi nominal")
 
-  let res=await fetch("/api/create",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({amount:Number(nominal)})})
-  let data=await res.json()
+  let res=await fetch("/api/create",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({amount:Number(nominal)})
+  })
 
+  let data=await res.json()
   if(!data.qr) return alert("Gagal QR")
 
   transaksiId=data.id
@@ -245,7 +250,7 @@ async function buatQR(){
 }
 
 function startProgress(){
-  intervalProgress=setInterval(()=>{
+  setInterval(()=>{
     progress+=2
     if(progress>100) progress=0
     document.getElementById("progress").style.width=progress+"%"
@@ -253,10 +258,9 @@ function startProgress(){
 }
 
 function startTimer(){
-  let t=setInterval(()=>{
+  setInterval(()=>{
     timeLeft--
     document.getElementById("timer").innerText="Expired: "+timeLeft+"s"
-    if(timeLeft<=0) clearInterval(t)
   },1000)
 }
 
@@ -267,26 +271,16 @@ async function cekManual(){
 }
 
 function autoCek(){
-  intervalCek=setInterval(async()=>{
+  setInterval(async()=>{
     let res=await fetch(`/api/status?id=${transaksiId}`)
     let data=await res.json()
 
     if(data.status==="success"){
-      clearInterval(intervalCek)
-      clearInterval(intervalProgress)
-
       document.getElementById("qrisBox").style.display="none"
       document.getElementById("successBox").style.display="block"
-      document.getElementById("sound").play()
     }
   },4000)
 }
-
-/* 🔥 FORCE PLAY VIDEO (FIX BLANK ISSUE) */
-window.addEventListener("load", () => {
-  let v = document.getElementById("bgVideo")
-  v.play().catch(()=>{})
-})
 </script>
 
 </body>
