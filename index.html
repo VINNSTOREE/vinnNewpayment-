@@ -9,12 +9,32 @@
 body {
   margin:0;
   font-family: monospace;
-  background:#05070d;
   color:white;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
+  overflow:hidden;
+}
+
+/* BACKGROUND VIDEO */
+#bgVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* OVERLAY */
+body::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
 }
 
 /* RGB */
@@ -107,7 +127,7 @@ input {
   font-size:16px;
 }
 
-/* QUICK NOMINAL */
+/* QUICK */
 .quick {
   display:grid;
   grid-template-columns: repeat(3, 1fr);
@@ -122,12 +142,6 @@ input {
   font-weight:bold;
   background:#00fff7;
   cursor:pointer;
-  transition:0.3s;
-}
-
-.quick button:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px #00fff7;
 }
 
 /* QR */
@@ -137,17 +151,6 @@ input {
   width:220px;
   border-radius:16px;
   box-shadow:0 0 40px #00fff7;
-  animation: zoom 0.6s ease, pulse 2s infinite;
-}
-
-@keyframes zoom {
-  from{transform:scale(0.5);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
-@keyframes pulse {
-  0%{box-shadow:0 0 25px #00fff7;}
-  50%{box-shadow:0 0 50px #00fff7;}
-  100%{box-shadow:0 0 25px #00fff7;}
 }
 
 /* PROGRESS */
@@ -180,6 +183,11 @@ input {
 </head>
 
 <body>
+
+<!-- VIDEO BACKGROUND -->
+<video autoplay muted loop id="bgVideo">
+  <source src="video.mp4" type="video/mp4">
+</video>
 
 <div class="container">
   <img src="-media-/logo.png" class="logo">
