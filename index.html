@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -37,12 +37,6 @@ body::before {
   z-index:-1;
 }
 
-/* RGB */
-@keyframes rgb {
-  0%{filter:hue-rotate(0);}
-  100%{filter:hue-rotate(360deg);}
-}
-
 /* BOX */
 .container {
   width:90%;
@@ -50,34 +44,8 @@ body::before {
   padding:25px;
   border-radius:20px;
   text-align:center;
-  position:relative;
-  animation:rgb 6s linear infinite;
   background:rgba(0,0,0,0.4);
   backdrop-filter:blur(10px);
-}
-
-.container::before {
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:20px;
-  background:linear-gradient(0deg,#00fff7,#00ffaa,#00ffcc);
-  animation:spin 6s linear infinite;
-  z-index:-1;
-}
-
-.container::after {
-  content:"";
-  position:absolute;
-  inset:2px;
-  background:#0b0f1a;
-  border-radius:20px;
-  z-index:-1;
-}
-
-@keyframes spin {
-  0%{transform:rotate(0);}
-  100%{transform:rotate(360deg);}
 }
 
 /* LOGO */
@@ -183,12 +151,12 @@ input {
 
 <body>
 
-<!-- 🔥 VIDEO (20 DETIK LOOP) -->
-<video id="bgVideo" autoplay muted loop playsinline>
+<!-- 🔥 VIDEO BACKGROUND (FIXED AUTO PLAY) -->
+<video id="bgVideo" autoplay muted loop playsinline preload="auto">
   <source src="video.mp4" type="video/mp4">
 </video>
 
-<!-- 🔊 AUDIO BACKGROUND (LOOP) -->
+<!-- AUDIO BACKGROUND -->
 <audio id="bgMusic" autoplay loop>
   <source src="music.mp3" type="audio/mp3">
 </audio>
@@ -313,6 +281,12 @@ function autoCek(){
     }
   },4000)
 }
+
+/* 🔥 FORCE PLAY VIDEO (FIX BLANK ISSUE) */
+window.addEventListener("load", () => {
+  let v = document.getElementById("bgVideo")
+  v.play().catch(()=>{})
+})
 </script>
 
 </body>
