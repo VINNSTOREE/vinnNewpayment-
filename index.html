@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -55,6 +55,7 @@ body::before {
   background:rgba(0,0,0,0.4);
   backdrop-filter:blur(10px);
 }
+
 .container::before {
   content:"";
   position:absolute;
@@ -64,6 +65,7 @@ body::before {
   animation:spin 6s linear infinite;
   z-index:-1;
 }
+
 .container::after {
   content:"";
   position:absolute;
@@ -95,11 +97,6 @@ body::before {
   text-decoration:none;
   color:white;
   cursor:pointer;
-  transition:0.3s;
-}
-.btn:hover {
-  transform:translateY(-3px);
-  box-shadow:0 0 20px #00fff7;
 }
 
 /* MODAL */
@@ -126,7 +123,6 @@ input {
   border-radius:12px;
   border:none;
   text-align:center;
-  font-size:16px;
 }
 
 /* QUICK */
@@ -162,6 +158,7 @@ input {
   background:#222;
   border-radius:10px;
 }
+
 .progress-fill {
   height:100%;
   width:0%;
@@ -181,37 +178,20 @@ input {
   text-decoration:none;
   font-weight:bold;
 }
-
-/* START SOUND BUTTON */
-#startBtn {
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  padding:12px 18px;
-  border:none;
-  border-radius:12px;
-  background:#00fff7;
-  font-weight:bold;
-  cursor:pointer;
-  z-index:9999;
-}
 </style>
 </head>
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
-<video id="bgVideo" loop>
+<!-- 🔥 VIDEO (20 DETIK LOOP) -->
+<video id="bgVideo" autoplay muted loop playsinline>
   <source src="video.mp4" type="video/mp4">
 </video>
 
-<!-- AUDIO BACKGROUND -->
-<audio id="bgMusic" loop>
+<!-- 🔊 AUDIO BACKGROUND (LOOP) -->
+<audio id="bgMusic" autoplay loop>
   <source src="music.mp3" type="audio/mp3">
 </audio>
-
-<!-- START SOUND -->
-<button id="startBtn" onclick="startMedia()">▶ START SOUND</button>
 
 <div class="container">
   <img src="-media-/logo.png" class="logo">
@@ -268,12 +248,6 @@ input {
 <script>
 let transaksiId, progress=0, intervalCek, intervalProgress, timeLeft=300
 
-function startMedia(){
-  document.getElementById("bgVideo").play()
-  document.getElementById("bgMusic").play()
-  document.getElementById("startBtn").style.display="none"
-}
-
 function openQRIS(){
   document.getElementById("modalQR").style.display="flex"
 }
@@ -285,8 +259,6 @@ function setNominal(n){
 async function buatQR(){
   let nominal=document.getElementById("nominal").value
   if(!nominal) return alert("Isi nominal")
-
-  document.getElementById("btnBayar").disabled=true
 
   let res=await fetch("/api/create",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({amount:Number(nominal)})})
   let data=await res.json()
@@ -344,4 +316,4 @@ function autoCek(){
 </script>
 
 </body>
-  </html>
+</html>
