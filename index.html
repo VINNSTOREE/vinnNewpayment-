@@ -14,7 +14,7 @@ body {
   overflow:hidden;
 }
 
-/* 🔥 VIDEO BACKGROUND FIX */
+/* VIDEO BACKGROUND */
 #bgVideo {
   position:fixed;
   top:0;
@@ -25,7 +25,7 @@ body {
   z-index:-2;
 }
 
-/* DARK OVERLAY */
+/* OVERLAY */
 .overlay {
   position:fixed;
   inset:0;
@@ -33,7 +33,7 @@ body {
   z-index:-1;
 }
 
-/* CENTER BOX */
+/* MAIN CONTAINER */
 .container {
   position:relative;
   z-index:1;
@@ -67,7 +67,7 @@ body {
   cursor:pointer;
 }
 
-/* MODAL */
+/* MODAL FULL PREMIUM (UPDATED) */
 .modal {
   position:fixed;
   inset:0;
@@ -78,12 +78,17 @@ body {
   z-index:10;
 }
 
+/* 🔥 UPGRADE DI SINI */
 .modal-content {
   width:350px;
   padding:20px;
   border-radius:20px;
   text-align:center;
-  background:#111;
+  background:rgba(17,17,17,0.3);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 0 30px rgba(0,255,247,0.25);
 }
 
 /* INPUT */
@@ -95,7 +100,7 @@ input {
   text-align:center;
 }
 
-/* QUICK */
+/* QUICK BUTTON */
 .quick {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -153,7 +158,7 @@ input {
 
 <body>
 
-<!-- 🔥 VIDEO BACKGROUND (INI INTI FIX) -->
+<!-- VIDEO BACKGROUND -->
 <video id="bgVideo" autoplay muted loop playsinline>
   <source src="videoo.mp4" type="video/mp4">
 </video>
