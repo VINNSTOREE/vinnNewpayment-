@@ -15,9 +15,27 @@ body {
   background:#000;
 }
 
-/* OVERLAY DIHAPUS TOTAL */
+/* 🎥 BACKGROUND VIDEO */
+video.bg-video {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
 
-/* MAIN CONTAINER (NO BORDER / NO BOX STYLE) */
+/* 🌑 OVERLAY GELAP + BLUR */
+.overlay {
+  position:fixed;
+  inset:0;
+  backdrop-filter: blur(6px);
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+}
+
+/* CONTAINER */
 .container {
   position:relative;
   width:90%;
@@ -26,10 +44,6 @@ body {
   top:50%;
   transform:translateY(-50%);
   text-align:center;
-  padding:0;
-  background:transparent;
-  border:none;
-  box-shadow:none;
 }
 
 /* LOGO */
@@ -49,7 +63,15 @@ body {
   color:white;
   text-decoration:none;
   cursor:pointer;
-  background:transparent;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter: blur(4px);
+  transition:0.3s;
+}
+
+.btn:hover {
+  background:#00fff7;
+  color:black;
+  box-shadow:0 0 20px #00fff7;
 }
 
 /* MODAL */
@@ -59,19 +81,18 @@ body {
   display:none;
   justify-content:center;
   align-items:center;
-  background:rgba(0,0,0,0.9);
+  background:rgba(0,0,0,0.85);
   z-index:10;
 }
 
-/* 🔥 HAPUS BORDER KOTAK TOTAL */
+/* MODAL CONTENT */
 .modal-content {
   width:350px;
   padding:20px;
-  border-radius:0;
   text-align:center;
-  background:transparent;
-  border:none;
-  box-shadow:none;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+  border-radius:15px;
 }
 
 /* INPUT */
@@ -140,6 +161,13 @@ input {
 </head>
 
 <body>
+
+<!-- 🎥 VIDEO -->
+<video class="bg-video" autoplay muted loop playsinline>
+  <source src="bg.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
 
 <!-- UI -->
 <div class="container">
