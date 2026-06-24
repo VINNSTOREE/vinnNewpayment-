@@ -1,5 +1,5 @@
 const config = {
-  API_KEY: process.env.API_KEY || "rg_92de2603ed65af6487074222c8757a",
+  API_KEY: process.env.API_KEY || "rg_34cf185626d1e99457e110568e5710",
   BASE_URL: "https://ramashop.my.id/api/public",
   MIN_AMOUNT: 1000,
   MAX_AMOUNT: 1000000,
