@@ -145,6 +145,32 @@ input{
   color:black;
   text-decoration:none;
 }
+
+/* Style untuk modal Dana Bisnis */
+#modalDanaBisnis {
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,.88);
+  z-index:10;
+}
+
+#dabisImage {
+  width:220px;
+  border-radius:16px;
+  margin:15px 0;
+}
+
+.close-modal {
+  margin-top:12px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:#00fff7;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -163,7 +189,17 @@ input{
 <div class="btn" onclick="openQRIS()">💳 QRIS OTOMATIS</div>
 <a class="btn" href="/DANA">💸 Dana</a>
 <a class="btn" href="/GOPAY">📲 GoPay</a>
+<div class="btn" onclick="openDanaBisnis()">🏦 Dana Bisnis</div>
 <div class="btn" onclick="aktifinSound()">🔊 Aktifkan Sound</div>
+</div>
+
+<!-- Modal Dana Bisnis -->
+<div class="modal" id="modalDanaBisnis">
+  <div class="modal-content">
+    <h3>DANA BISNIS</h3>
+    <img id="dabisImage" src="-media-/dabis.png" alt="Dana Bisnis">
+    <button class="close-modal" onclick="closeDanaBisnis()">Tutup</button>
+  </div>
 </div>
 
 <div class="modal" id="modalQR">
@@ -224,6 +260,15 @@ video.play();
 
 function openQRIS(){
 document.getElementById("modalQR").style.display="flex";
+}
+
+// Fungsi untuk modal Dana Bisnis
+function openDanaBisnis() {
+  document.getElementById("modalDanaBisnis").style.display = "flex";
+}
+
+function closeDanaBisnis() {
+  document.getElementById("modalDanaBisnis").style.display = "none";
 }
 
 function setNominal(n){
